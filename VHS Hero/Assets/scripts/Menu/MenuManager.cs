@@ -4,9 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
+    public GameObject loadingScreen;
+
+    List<AsyncOperation> scenesLoading;
     public void Play()
     {
-        SceneManager.LoadScene("main");
+        //SceneManager.LoadScene("main");
+        loadingScreen.SetActive(true);
+        scenesLoading.Add(SceneManager.LoadSceneAsync("main"));
+
+        StartCoroutine(GetSceneLoadProgress());
     }
 
     public void Settings()
@@ -17,5 +24,17 @@ public class MenuManager : MonoBehaviour
     public void About()
     {
         SceneManager.LoadScene("About");
+    }
+
+    public IEnumerator GetSceneLoadProgress()
+    {
+        for (int i = 0;i < scenesLoading.Count;i++)
+        {
+            while (!scenesLoading[i].isDone)
+            {
+                yield return null;
+            }
+        }
+        loadingScreen.SetActive(false);
     }
 }
