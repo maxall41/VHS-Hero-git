@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &52919097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 52919098}
+  m_Layer: 0
+  m_Name: playerTransistionHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &52919098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52919097}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.862396, y: 1.399719, z: -102.970375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &54111140
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 577632880525547b7a324d814b078d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorNamesForInterLevelCauseAndEffect: []
 --- !u!4 &352467122
 Transform:
   m_ObjectHideFlags: 0
@@ -2119,6 +2148,7 @@ MonoBehaviour:
   - {fileID: 8183401895124482680, guid: 277a75cfeb1164a2b9c571c91279da91, type: 3}
   travelStatusText: {fileID: 1506212979}
   flicker: {fileID: 1013201760}
+  transHolder: {fileID: 52919097}
   slider: {fileID: 1336345539}
 --- !u!4 &2047368622
 Transform:
