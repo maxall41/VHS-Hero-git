@@ -100,7 +100,7 @@ public class LevelManager : MonoBehaviour
         {
             // Pulls player back to current level
             GameObject.Find("Player").transform.parent = transHolder.transform;
-            Destroy(lastLevel);
+            DestroyImmediate(lastLevel);
             lastLevel = Instantiate(levels[lastLevelIndex], new Vector3(0,2.9F, 0), Quaternion.identity);
             GameObject.Find("Player").transform.parent = lastLevel.transform;
             pullbacked = false;
@@ -174,7 +174,7 @@ public class LevelManager : MonoBehaviour
             {
                 StartCoroutine("Flicker"); // Make screen flicker
             GameObject.Find("Player").transform.parent = transHolder.transform;
-            Destroy(lastLevel); // Remove old level
+            DestroyImmediate(lastLevel);
 
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
 
@@ -200,7 +200,7 @@ public class LevelManager : MonoBehaviour
         {
             StartCoroutine("Flicker"); // Make screen flicker
             GameObject.Find("Player").transform.parent = transHolder.transform;
-            Destroy(lastLevel); // Remove old level
+            DestroyImmediate(lastLevel);
 
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
 
