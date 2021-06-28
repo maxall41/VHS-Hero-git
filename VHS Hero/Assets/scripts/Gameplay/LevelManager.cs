@@ -46,6 +46,7 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
+        //TODO: Fix:
         StartCoroutine("flicker");
         Destroy(lastLevel);
         lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 2.9F, 0), Quaternion.identity);
@@ -54,35 +55,41 @@ public class LevelManager : MonoBehaviour
         GameObject.Find("Player").transform.position = new Vector3(5, 3,0);
     }
 
+    private void Snap(GameObject gb)
+    {
+        // Snap to nearest point to prevent player falling off map.
+
+        GameObject[] NearGameobjects = GameObject.FindGameObjectsWithTag("Snap");
+        foreach (GameObject g in NearGameobjects)
+        {
+            float dist = Vector3.Distance(GameObject.Find("Player").transform.position, g.transform.position);
+            if (dist < oldDistance)
+            {
+                closetsObject = g;
+                oldDistance = dist;
+            }
+        }
+        gb.transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y + 2, 0);
+        //gb.transform.position = new Vector3(gb.transform.position.x, gb.transform.position.y, 0);
+    }
+
     private void Update()
     {
         timeCooldown -= Time.deltaTime;
        pullbackTimer -= Time.deltaTime;
         cooldownDisplay += Time.deltaTime;
         slider.value = cooldownDisplay;
+
         if (pullbackTimer < 0 && pullbacked == true)
         {
+            // Pulls player back to current level
             Destroy(lastLevel);
             lastLevel = Instantiate(levels[lastLevelIndex], new Vector3(0,2.9F, 0), Quaternion.identity);
             pullbacked = false;
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_pullback();
-            GameObject.Find("ILPM").GetComponent<InterLevelEffectManager>().registerPullbackEffects(); // For inter level cause and effect
 
-            // Snap to nearest point
+            Snap(GameObject.Find("Player"));
 
-            GameObject[] NearGameobjects = GameObject.FindGameObjectsWithTag("Snap");
-            foreach (GameObject g in NearGameobjects)
-            {
-                float dist = Vector3.Distance(GameObject.Find("Player").transform.position, g.transform.position);
-                if (dist < oldDistance)
-                {
-                    closetsObject = g;
-                    oldDistance = dist;
-                }
-            }
-            Debug.Log("Snapped to " + closetsObject);
-            GameObject.Find("Player").transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y + 2, 0);
-            GameObject.Find("Player").transform.position = new Vector3(GameObject.Find("Player").transform.position.x, GameObject.Find("Player").transform.position.y, 0);
         }
 
         if (timeCooldown < 0)
@@ -119,21 +126,21 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator Flicker()
     {
-        flicker.active = true;
+        flicker.SetActive(true);
         yield return new WaitForSeconds(0.09F);
-        flicker.active = false;
+        flicker.SetActive(false);
         yield return new WaitForSeconds(0.04F);
-        flicker.active = true;
+        flicker.SetActive(true);
         yield return new WaitForSeconds(0.02F);
-        flicker.active = false;
+        flicker.SetActive(false);
         yield return new WaitForSeconds(0.05F);
-        flicker.active = true;
+        flicker.SetActive(true);
         yield return new WaitForSeconds(0.03F);
-        flicker.active = false;
+        flicker.SetActive(false);
         yield return new WaitForSeconds(0.06F);
-        flicker.active = true;
+        flicker.SetActive(true);
         yield return new WaitForSeconds(0.07F);
-        flicker.active = false;
+        flicker.SetActive(false);
 
     }
 
@@ -147,7 +154,7 @@ public class LevelManager : MonoBehaviour
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
 
 
-                // Weird confusing code
+                // Weird mess of code
                 if (onStart == false)
                 {
                     lastLevelIndex = currentLevel - 1;
@@ -158,22 +165,10 @@ public class LevelManager : MonoBehaviour
                     lastLevelIndex = 0;
                 }
                 lastLevel = Instantiate(levels[currentLevel - 2], new Vector3(0, 2.9F, 0), Quaternion.identity);
-            // Snap to nearest point
-            GameObject[] NearGameobjects = GameObject.FindGameObjectsWithTag("Snap");
-                foreach (GameObject g in NearGameobjects)
-                {
-                    float dist = Vector3.Distance(GameObject.Find("Player").transform.position, g.transform.position);
-                    if (dist < oldDistance)
-                    {
-                        closetsObject = g;
-                        oldDistance = dist;
-                    }
-                }
-            GameObject.Find("Player").transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y + 2,0);
-            GameObject.Find("Player").transform.position = new Vector3(GameObject.Find("Player").transform.position.x, GameObject.Find("Player").transform.position.y, 0);
-            Debug.Log("Snapped to " + closetsObject);
-            // Stuff
-            pullbackTimer = pullbackTime;
+                // Snap to nearest point
+                Snap(GameObject.Find("Player"));
+                // Stuff
+                pullbackTimer = pullbackTime;
                 pullbacked = true;
                 timeCooldown = 3.5F;
                 cooldownDisplay = 0;
@@ -191,7 +186,7 @@ public class LevelManager : MonoBehaviour
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
 
 
-            // Weird confusing code
+            // Weird mess of code
             if (onStart == false)
             {
                 lastLevelIndex = currentLevel - 1;
@@ -203,19 +198,7 @@ public class LevelManager : MonoBehaviour
             lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 2.9F, 0), Quaternion.identity);
 
             // Snap to nearest point
-            GameObject[] NearGameobjects = GameObject.FindGameObjectsWithTag("Snap");
-            foreach (GameObject g in NearGameobjects)
-            {
-                float dist = Vector3.Distance(GameObject.Find("Player").transform.position, g.transform.position);
-                if (dist < oldDistance)
-                {
-                    closetsObject = g;
-                    oldDistance = dist;
-                }
-            }
-            Debug.Log("Snapped to " + closetsObject);
-            GameObject.Find("Player").transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y + 2, 0);
-            GameObject.Find("Player").transform.position = new Vector3(GameObject.Find("Player").transform.position.x, GameObject.Find("Player").transform.position.y, 0); 
+            Snap(GameObject.Find("Player"));
             // Stuff
             pullbackTimer = pullbackTime;
             pullbacked = true;

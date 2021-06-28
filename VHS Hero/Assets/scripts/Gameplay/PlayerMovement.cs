@@ -10,8 +10,6 @@ public class PlayerMovement : MonoBehaviour {
 	bool jump = false;
 
 	float jumpPressRemember;
-
-	float timeHeld;
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,7 +22,6 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetButtonDown("Jump"))
 		{
 			jumpPressRemember = 0.25F;
-			timeHeld += Time.deltaTime;
 		}
 
 	}
@@ -112,7 +109,6 @@ public class PlayerMovement : MonoBehaviour {
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 			groundTimer = 0;
 			jumpPressRemember = 0;
-			timeHeld = 0;
 		}
 	}
 
