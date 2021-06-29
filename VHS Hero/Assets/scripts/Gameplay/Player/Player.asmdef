@@ -1,8 +1,7 @@
 {
-    "name": "Misc",
+    "name": "Player",
     "rootNamespace": "",
     "references": [
-        "GUID:15fc0a57446b3144c949da3e2b9737a9",
         "GUID:48abbf242084b4a0d93e9ac5b2b615ee"
     ],
     "includePlatforms": [],
