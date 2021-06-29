@@ -782,7 +782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: See the objects in red thats your time vision. It means in the next iteration
+  m_text: The objects in red is your time vision. It means in the next iteration
     it will change. To go to the next iteration hold F. Or B to goto the last iteration.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: afe280312a10a47869a0a3d38a687bc0, type: 2}
@@ -9511,7 +9511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6708499212520793932, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
       propertyPath: m_InstanceId
-      value: -52546
+      value: -6458
       objectReference: {fileID: 0}
     - target: {fileID: 6708499212520793932, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
       propertyPath: m_ShapePathHash
@@ -9679,7 +9679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6708499212520793932, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
       propertyPath: m_InstanceId
-      value: -52554
+      value: -6466
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
@@ -9749,7 +9749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6708499212520793932, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
       propertyPath: m_InstanceId
-      value: -52558
+      value: -6470
       objectReference: {fileID: 0}
     - target: {fileID: 6708499212520793932, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
       propertyPath: m_ShapePathHash
@@ -9909,7 +9909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6708499212520793932, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
       propertyPath: m_InstanceId
-      value: -52574
+      value: -6486
       objectReference: {fileID: 0}
     - target: {fileID: 6708499212520793932, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
       propertyPath: m_ShapePathHash
@@ -9999,7 +9999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6708499212520793932, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
       propertyPath: m_InstanceId
-      value: -52578
+      value: -6490
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a438d021aa220492c83ef4c18b705ae6, type: 3}
