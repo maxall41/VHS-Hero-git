@@ -14,6 +14,11 @@ public class cup : MonoBehaviour
 
     public List<string> tba = new List<string>();
 
+    private void Start()
+    {
+        Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
+    }
+
     public void inserted()
     {
         Debug.Log("Inserted");

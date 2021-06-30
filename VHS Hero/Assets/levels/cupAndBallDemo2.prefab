@@ -2619,6 +2619,7 @@ MonoBehaviour:
   offMat: {fileID: 2100000, guid: 113025363e322445bbf6c360c427b9c5, type: 2}
   onMat: {fileID: 2100000, guid: f40c0cff58da2443fa7bc47ac2dfc725, type: 2}
   on: 0
+  Knob: {fileID: 0}
   tba: []
 --- !u!61 &4330357717557645917
 BoxCollider2D:
@@ -2630,10 +2631,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.13432026, y: 0.033580065}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2644,7 +2645,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.0222054, y: 2.3432026}
   m_EdgeRadius: 0
 --- !u!1 &1844193503505398186
 GameObject:

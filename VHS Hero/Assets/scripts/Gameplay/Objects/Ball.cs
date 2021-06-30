@@ -11,6 +11,11 @@ public class Ball : MonoBehaviour
 
     public GameObject Knob;
 
+    private void Start()
+    {
+        Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
