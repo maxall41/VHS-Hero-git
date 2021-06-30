@@ -6,6 +6,7 @@ public class Button : MonoBehaviour
 {
     public Door[] doorsToOpen;
     public bool DestroySelfOnCompletion = true;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player")

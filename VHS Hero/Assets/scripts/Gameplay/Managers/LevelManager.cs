@@ -16,6 +16,10 @@ public class LevelManager : MonoBehaviour
 
     private bool pullbacked;
 
+    public List<string> ballsPicked = new List<string>();
+
+    public List<string> buttonsActivated = new List<string>();
+
     private int lastLevelIndex;
 
     private float timeCooldown;
@@ -108,6 +112,8 @@ public class LevelManager : MonoBehaviour
 
             Snap(GameObject.Find("Player"));
 
+            TimelineMovementEvent();
+
         }
 
         if (timeCooldown < 0)
@@ -142,6 +148,7 @@ public class LevelManager : MonoBehaviour
                 lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 2.9F, 0), Quaternion.identity);
                 GameObject.Find("Player").transform.parent = lastLevel.transform;
                 currentLevel++;
+                TimelineMovementEvent();
             }
             nextLevelCooldown = 0.5F;
         }
@@ -168,6 +175,28 @@ public class LevelManager : MonoBehaviour
 
     }
 
+        private void TimelineMovementEvent()
+        {
+            for (int i = 0;i < ballsPicked.Count;i++)
+            {
+                GameObject b = GameObject.Find(ballsPicked[i]);
+                if (b != null)
+                {
+                    Destroy(b);
+                }
+            }
+
+            for (int i = 0;i < buttonsActivated.Count;i++)
+            {
+                GameObject ba = GameObject.Find(buttonsActivated[i]);
+                if (ba != null)
+                {
+                    ba.GetComponent<cup>().F_on();
+                }
+            }
+
+        }
+
         public void LastLevelPullback(float pullbackTime)
         {
             if (timeCooldown < 0)
@@ -178,7 +207,7 @@ public class LevelManager : MonoBehaviour
 
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
 
-
+                  
                  // Weird mess of code
                 lastLevelIndex = currentLevel - 1;
                 lastLevel = Instantiate(levels[currentLevel - 2], new Vector3(0, 2.9F, 0), Quaternion.identity);
@@ -190,6 +219,7 @@ public class LevelManager : MonoBehaviour
                 pullbacked = true;
                 timeCooldown = 3.5F;
                 cooldownDisplay = 0;
+            TimelineMovementEvent();
             }
         }
 
@@ -216,6 +246,7 @@ public class LevelManager : MonoBehaviour
             pullbacked = true;
             timeCooldown = 3.5F;
             cooldownDisplay = 0;
+            TimelineMovementEvent();
         }
     }
 }
