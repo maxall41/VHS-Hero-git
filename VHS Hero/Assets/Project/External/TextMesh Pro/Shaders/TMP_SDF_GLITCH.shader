@@ -1,4 +1,4 @@
-Shader "TextMeshPro/Distance Field" {
+Shader "TextMeshPro/Distance Field glitch" {
 
 Properties {
 	_FaceTex			("Face Texture", 2D) = "white" {}
@@ -6,6 +6,16 @@ Properties {
 	_FaceUVSpeedY		("Face UV Speed Y", Range(-5, 5)) = 0.0
 	[HDR]_FaceColor		("Face Color", Color) = (1,1,1,1)
 	_FaceDilate			("Face Dilate", Range(-1,1)) = 0
+
+
+	_MainTex2 ("Face Texture", 2D) = "white" {}
+    _SecondaryTex ("Secondary Texture", 2D) = "white" {}
+    _OffsetNoiseX ("Offset Noise X", float) = 0.0
+    _OffsetNoiseY ("Offset Noise Y", float) = 0.0
+    _OffsetPosY ("Offset position Y", float) = 0.0
+    _OffsetColor ("Offset Color", Range(0.005, 0.1)) = 0
+    _OffsetDistortion ("Offset Distortion", float) = 500
+    _Intensity ("Mask Intensity", Range(0.0, 1)) = 1.0
 
 	[HDR]_OutlineColor	("Outline Color", Color) = (0,0,0,1)
 	_OutlineTex			("Outline Texture", 2D) = "white" {}
@@ -84,6 +94,8 @@ Properties {
 	_ColorMask			("Color Mask", Float) = 15
 }
 
+
+
 SubShader {
 
 	Tags
@@ -158,6 +170,25 @@ SubShader {
 		float4 _FaceTex_ST;
 		float4 _OutlineTex_ST;
 
+		half _OffsetNoiseX;
+        half _OffsetNoiseY;
+
+		uint Hash(uint s)
+		{
+			s ^= 2747636419u;
+			s *= 2654435769u;
+			s ^= s >> 16;
+			s *= 2654435769u;
+			s ^= s >> 16;
+			s *= 2654435769u;
+			return s;
+		}
+
+		float Random(uint seed)
+		{
+			return float(Hash(seed)) / 4294967295.0; // 2^32-1
+		}
+
 		pixel_t VertShader(vertex_t input)
 		{
 			pixel_t output;
@@ -219,6 +250,7 @@ SubShader {
 
 			output.position = vPosition;
 			output.color = input.color;
+			// output.color = float4(input.color[0] * Random((int)_Time[1] / 12),input.color[1] * Random((int)_Time[2] / 11),input.color[2] * Random((int)_Time[3] / 10),1);
 			output.atlas =	input.texcoord0;
 			output.param =	float4(alphaClip, scale, bias, weight);
 			output.mask = half4(vert.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * half2(_MaskSoftnessX, _MaskSoftnessY) + pixelSize.xy));
@@ -227,10 +259,16 @@ SubShader {
 			output.texcoord2 = float4(input.texcoord0 + bOffset, bScale, bBias);
 			output.underlayColor =	underlayColor;
 			#endif
-			output.textures = float4(faceUV, outlineUV);
+			output.textures = float4(faceUV, outlineUV + float2(_OffsetNoiseX - 0.2f, _OffsetNoiseY));
 
 			return output;
 		}
+
+
+			fixed _Intensity;
+            float _OffsetColor;
+            half _OffsetPosY;
+            half _OffsetDistortion;
 
 
 		fixed4 PixShader(pixel_t input) : SV_Target

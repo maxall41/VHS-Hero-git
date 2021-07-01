@@ -91,6 +91,9 @@ void PixShader(Input input, inout SurfaceOutput o)
 	faceColor.rgb /= max(faceColor.a, 0.0001);
 #endif
 
+
+	
+
 	// Set Standard output structure
 	o.Albedo = faceColor.rgb;
 	o.Normal = -n;

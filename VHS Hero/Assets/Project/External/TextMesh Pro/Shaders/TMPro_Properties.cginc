@@ -6,6 +6,9 @@ uniform fixed4		_FaceColor;					// RGBA : Color + Opacity
 uniform float		_FaceDilate;				// v[ 0, 1]
 uniform float		_OutlineSoftness;			// v[ 0, 1]
 
+uniform sampler2D _MainTex2;
+uniform sampler2D _SecondaryTex;
+
 uniform sampler2D	_OutlineTex;				// RGBA : Color + Opacity
 uniform float		_OutlineUVSpeedX;
 uniform float		_OutlineUVSpeedY;
