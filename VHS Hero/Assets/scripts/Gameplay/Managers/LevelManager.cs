@@ -54,12 +54,19 @@ public class LevelManager : MonoBehaviour
     public void Restart()
     {
         //TODO: Fix:
+        GameObject.Find("Player").transform.parent = transHolder.transform;
         StartCoroutine("flicker");
         Destroy(lastLevel);
-        lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 2.9F, 0), Quaternion.identity);
+        lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 2.9F, 0), Quaternion.identity);
 
 
         GameObject.Find("Player").transform.position = new Vector3(5, 3,0);
+
+
+        // Reset saved parameters
+        GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingBall = false;
+        ballsPicked.Clear();
+        buttonsActivated.Clear();
     }
 
     private void Snap(GameObject gb)
@@ -69,6 +76,7 @@ public class LevelManager : MonoBehaviour
         closetsObject = FindClosestSnap();
         gb.transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y, 0);
         //gb.transform.position = new Vector3(gb.transform.position.x, gb.transform.position.y, 0);
+        GameObject.Find("Player").transform.parent = lastLevel.transform;
         Debug.Log("Snapped to " + closetsObject.name);
     }
 
