@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour {
 	bool jump = false;
 
 	float jumpPressRemember;
+
+	public Animator animator;
 	
 	// Update is called once per frame
 	void Update () {
@@ -76,6 +78,13 @@ public class PlayerMovement : MonoBehaviour {
 		//only control the player if grounded or airControl is turned on
 		if (m_Grounded || m_AirControl)
 		{
+			if (move > 0.2 || move < -0.2)
+            {
+				animator.SetBool("walk", true);
+			} else
+            {
+				animator.SetBool("walk", false);
+			}
 
 			// Enable the collider when not crouching
 			if (m_CrouchDisableCollider != null)
@@ -86,6 +95,7 @@ public class PlayerMovement : MonoBehaviour {
 			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
 			// And then smoothing it out and applying it to the character
 			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
+
 
 			// If the input is moving the player right and the player is facing left...
 			if (move > 0 && !m_FacingRight)
@@ -99,6 +109,9 @@ public class PlayerMovement : MonoBehaviour {
 				// ... flip the player.
 				Flip();
 			}
+		} else
+        {
+			animator.SetBool("walk", false);
 		}
 		// If the player should jump...
 		if ((jumpPressRemember > 0) && (groundTimer > 0))

@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
-        //TODO: Fix:
+        //TODO: Fix voice line system on restart
         GameObject.Find("Player").transform.parent = transHolder.transform;
         StartCoroutine("flicker");
         Destroy(lastLevel);
@@ -157,34 +157,52 @@ public class LevelManager : MonoBehaviour
                 GameObject.Find("Player").transform.parent = lastLevel.transform;
                 currentLevel++;
                 TimelineMovementEvent();
+                GameObject.Find("Tutorial").GetComponent<TextPlayer>().NextLevel();
             }
             nextLevelCooldown = 0.5F;
         }
 
     }
 
+    private bool IntToBool(int input)
+    {
+        if (input == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     IEnumerator Flicker()
     {
-        flicker.SetActive(true);
-        yield return new WaitForSeconds(0.09F);
-        flicker.SetActive(false);
-        yield return new WaitForSeconds(0.04F);
-        flicker.SetActive(true);
-        yield return new WaitForSeconds(0.02F);
-        flicker.SetActive(false);
-        yield return new WaitForSeconds(0.05F);
-        flicker.SetActive(true);
-        yield return new WaitForSeconds(0.03F);
-        flicker.SetActive(false);
-        yield return new WaitForSeconds(0.06F);
-        flicker.SetActive(true);
-        yield return new WaitForSeconds(0.07F);
-        flicker.SetActive(false);
+        if (IntToBool(PlayerPrefs.GetInt("DisableFlashing")) == false)
+        {
+            flicker.SetActive(true);
+            yield return new WaitForSeconds(0.09F);
+            flicker.SetActive(false);
+            yield return new WaitForSeconds(0.04F);
+            flicker.SetActive(true);
+            yield return new WaitForSeconds(0.02F);
+            flicker.SetActive(false);
+            yield return new WaitForSeconds(0.05F);
+            flicker.SetActive(true);
+            yield return new WaitForSeconds(0.03F);
+            flicker.SetActive(false);
+            yield return new WaitForSeconds(0.06F);
+            flicker.SetActive(true);
+            yield return new WaitForSeconds(0.07F);
+            flicker.SetActive(false);
+        }
 
     }
 
         private void TimelineMovementEvent()
         {
+            
+            GameObject.Find("AQM").GetComponent<AudioQueue>().queuedPlayers.Clear(); // Remove queued players to prevent incorrect count
             for (int i = 0;i < ballsPicked.Count;i++)
             {
                 GameObject b = GameObject.Find(ballsPicked[i]);
