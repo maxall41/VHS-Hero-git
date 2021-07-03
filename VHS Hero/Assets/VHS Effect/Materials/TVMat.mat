@@ -4,15 +4,13 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: TVMat
   m_Shader: {fileID: 4800000, guid: 7b0ad82b412d9bd4b92afa659b8d9df4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -85,13 +83,12 @@ Material:
     - _ZWrite: 1
     - _scanLines: 1
     - hardPix: -2.69
-    - hardScan: -14.08
+    - hardScan: -9.62
     - maskDark: 1.15
     - maskLight: 0.94
-    - resScale: 2.8
+    - resScale: 2.91
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ScanLinesColor: {r: 0, g: 0, b: 0, a: 0.272}
     - warp: {r: 0.03125, g: 0.04166, b: 0, a: 0}
-  m_BuildTextureStacks: []

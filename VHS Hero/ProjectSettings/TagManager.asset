@@ -7,11 +7,12 @@ TagManager:
   - Snap
   - Deadline
   - Ground
+  - cup
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - cup
   - Water
   - UI
   - ground
