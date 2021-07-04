@@ -4,13 +4,15 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: VHSMat
   m_Shader: {fileID: 4800000, guid: f7a4f0bc5e51c9149a2996b30791b1e8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -73,7 +75,7 @@ Material:
     - _OffsetDistortion: 1045
     - _OffsetNoiseX: 0.5914625
     - _OffsetNoiseY: 3.5860448
-    - _OffsetPosY: 0.010762215
+    - _OffsetPosY: 0
     - _Parallax: 0.02
     - _ScanLines: 2.09
     - _SmoothnessTextureChannel: 0
@@ -92,3 +94,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ScanLinesColor: {r: 0, g: 0, b: 0, a: 0}
     - warp: {r: 0.03125, g: 0.04166, b: 0, a: 0}
+  m_BuildTextureStacks: []

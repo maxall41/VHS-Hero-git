@@ -901,7 +901,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6.4117045
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1132,7 +1132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 40
   animator: {fileID: 715270063}
-  m_JumpForce: 645
+  m_JumpForce: 400
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
   m_AirControl: 1
@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afca3f3345e074873ac6796f32548c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdingBall: 0
+  holdingKey: 0
 --- !u!4 &715270062
 Transform:
   m_ObjectHideFlags: 0
@@ -1214,7 +1214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715270056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.34, y: -0, z: -0.11831747}
+  m_LocalPosition: {x: -8, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1894007070}
@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+  m_Texture: {fileID: 2800000, guid: 4f34d91f3c7e44855923494158011b68, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2038,10 +2038,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textDisplay: {fileID: 1362315719}
   sentences:
-  - press space to jump and use wasd to move
-  - Walk on the button to open the door
-  - Objects in red will change either in the past or the future
-  - You can travel forward in time with F or backwards with B
+  - Use WASD to move. Unlock the portal with the key.
+  - Press SPACE to jump.
+  - Press B to go backwards in time for 3 seconds
+  - Press F to go forward in time for 3 seconds
   typingSpeed: 0.05
 --- !u!114 &1362315719
 MonoBehaviour:
@@ -2701,15 +2701,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - {fileID: 6625642313930693696, guid: df8d5a10cd413418bac9a9e44a1da55e, type: 3}
-  - {fileID: 2710842527305948431, guid: 6d1537272a25e48ee944104225b7eb3d, type: 3}
-  - {fileID: 479348994158850097, guid: 0b250e8b1d9884569be5c226bfd1c279, type: 3}
-  - {fileID: 8183401895124482680, guid: 277a75cfeb1164a2b9c571c91279da91, type: 3}
-  ballsPicked: []
+  - {fileID: 1853590456490634011, guid: 42af580fdd40e48c29719494d4e814fd, type: 3}
+  - {fileID: 6325941788234986969, guid: ebba477170a0541b4bf3c26eeae643cf, type: 3}
+  - {fileID: 1282626242469208471, guid: 114bd5083cf624c84b1b6241fc21edc8, type: 3}
+  - {fileID: 5021872622574543771, guid: 672aaf8afcf3d474a874aed363052142, type: 3}
+  - {fileID: 2517923868916448939, guid: edd401f2c22874c17b6aa2c5037d693b, type: 3}
+  keysPicked: []
   buttonsActivated: []
   travelStatusText: {fileID: 1506212979}
   flicker: {fileID: 1013201760}
   transHolder: {fileID: 52919097}
+  SnapOn: 0
   slider: {fileID: 1336345539}
 --- !u!4 &2047368622
 Transform:
@@ -2719,7 +2721,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047368620}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.15287857, y: -0.63983727, z: -1.8695011}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

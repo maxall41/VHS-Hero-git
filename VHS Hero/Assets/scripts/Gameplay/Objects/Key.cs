@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class Key : MonoBehaviour
 {
 
     private bool watchForPickup;
@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            watchForPickup = true; // Im too lazy todo this the proper way
+            watchForPickup = true;
 
         }
     }
@@ -38,10 +38,10 @@ public class Ball : MonoBehaviour
     {
         if (watchForPickup == true)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == false)
             {
-                GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingBall = true;
-                lrh = GameObject.Find("levelman").GetComponent<LevelManager>().ballsPicked;
+                GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = true;
+                lrh = GameObject.Find("levelman").GetComponent<LevelManager>().keysPicked;
                 lrh.Add(gameObject.name);
                 Knob.SetActive(true);
                 Destroy(gameObject);

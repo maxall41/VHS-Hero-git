@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
 
     private bool pullbacked;
 
-    public List<string> ballsPicked = new List<string>();
+    public List<string> keysPicked = new List<string>();
 
     public List<string> buttonsActivated = new List<string>();
 
@@ -32,6 +32,8 @@ public class LevelManager : MonoBehaviour
 
     public GameObject transHolder;
 
+    public bool SnapOn = true;
+
     GameObject closetsObject;
     private float oldDistance = 9999;
 
@@ -45,7 +47,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 2.9F, 0), Quaternion.identity);
+        lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
         currentLevel++;
         playerStartPos = GameObject.Find("Player").transform.position;
 
@@ -57,27 +59,30 @@ public class LevelManager : MonoBehaviour
         GameObject.Find("Player").transform.parent = transHolder.transform;
         StartCoroutine("flicker");
         Destroy(lastLevel);
-        lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 2.9F, 0), Quaternion.identity);
+        lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
 
 
         GameObject.Find("Player").transform.position = new Vector3(5, 3,0);
 
 
         // Reset saved parameters
-        GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingBall = false;
-        ballsPicked.Clear();
+        GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = false;
+        keysPicked.Clear();
         buttonsActivated.Clear();
     }
 
     private void Snap(GameObject gb)
     {
-        Debug.Log(gb.transform.position);
-        // Snap to nearest point to prevent player falling off map.
-        closetsObject = FindClosestSnap();
-        gb.transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y, 0);
-        //gb.transform.position = new Vector3(gb.transform.position.x, gb.transform.position.y, 0);
-        GameObject.Find("Player").transform.parent = lastLevel.transform;
-        Debug.Log("Snapped to " + closetsObject.name);
+        if (SnapOn == true)
+        {
+            Debug.Log(gb.transform.position);
+            // Snap to nearest point to prevent player falling off map.
+            closetsObject = FindClosestSnap();
+            gb.transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y, 0);
+            //gb.transform.position = new Vector3(gb.transform.position.x, gb.transform.position.y, 0);
+            GameObject.Find("Player").transform.parent = lastLevel.transform;
+            Debug.Log("Snapped to " + closetsObject.name);
+        }
     }
 
     public GameObject FindClosestSnap()
@@ -113,7 +118,7 @@ public class LevelManager : MonoBehaviour
             // Pulls player back to current level
             GameObject.Find("Player").transform.parent = transHolder.transform;
             DestroyImmediate(lastLevel);
-            lastLevel = Instantiate(levels[lastLevelIndex], new Vector3(0,2.9F, 0), Quaternion.identity);
+            lastLevel = Instantiate(levels[lastLevelIndex], new Vector3(0,0, 0), Quaternion.identity);
             GameObject.Find("Player").transform.parent = lastLevel.transform;
             pullbacked = false;
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_pullback();
@@ -153,7 +158,7 @@ public class LevelManager : MonoBehaviour
                 StartCoroutine("Flicker"); // Make screen flicker
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
                 Destroy(lastLevel);
-                lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 2.9F, 0), Quaternion.identity);
+                lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
                 GameObject.Find("Player").transform.parent = lastLevel.transform;
                 currentLevel++;
                 TimelineMovementEvent();
@@ -203,9 +208,9 @@ public class LevelManager : MonoBehaviour
         {
             
             GameObject.Find("AQM").GetComponent<AudioQueue>().queuedPlayers.Clear(); // Remove queued players to prevent incorrect count
-            for (int i = 0;i < ballsPicked.Count;i++)
+            for (int i = 0;i < keysPicked.Count;i++)
             {
-                GameObject b = GameObject.Find(ballsPicked[i]);
+                GameObject b = GameObject.Find(keysPicked[i]);
                 if (b != null)
                 {
                     Destroy(b);
@@ -236,7 +241,7 @@ public class LevelManager : MonoBehaviour
                   
                  // Weird mess of code
                 lastLevelIndex = currentLevel - 1;
-                lastLevel = Instantiate(levels[currentLevel - 2], new Vector3(0, 2.9F, 0), Quaternion.identity);
+                lastLevel = Instantiate(levels[currentLevel - 2], new Vector3(0, 0, 0), Quaternion.identity);
             GameObject.Find("Player").transform.parent = lastLevel.transform;
             // Snap to nearest point
             Snap(GameObject.Find("Player"));
@@ -263,7 +268,7 @@ public class LevelManager : MonoBehaviour
 
             // Weird mess of code
             lastLevelIndex = currentLevel - 1;
-            lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 2.9F, 0), Quaternion.identity);
+            lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
             GameObject.Find("Player").transform.parent = lastLevel.transform;
             // Snap to nearest point
             Snap(GameObject.Find("Player"));
