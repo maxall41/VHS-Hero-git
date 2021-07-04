@@ -9643,6 +9643,7 @@ GameObject:
   - component: {fileID: 608585791}
   - component: {fileID: 608585796}
   - component: {fileID: 608585795}
+  - component: {fileID: 608585800}
   - component: {fileID: 608585798}
   - component: {fileID: 608585790}
   - component: {fileID: 608585799}
@@ -9783,7 +9784,7 @@ MonoBehaviour:
   - {fileID: 1558310884381546148}
   catalyst: 0
   end: 0
-  next: {fileID: 608585798}
+  next: {fileID: 608585800}
 --- !u!114 &608585796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9861,6 +9862,27 @@ MonoBehaviour:
   catalyst: 0
   end: 1
   next: {fileID: 0}
+--- !u!114 &608585800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608585789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ee95279caf040a0af196df7daf860a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 862527515}
+  titleText: 'Levels Designed by:'
+  people:
+  - IanX#7979
+  peopleSlots:
+  - {fileID: 1558310884381546148}
+  catalyst: 0
+  end: 0
+  next: {fileID: 608585798}
 --- !u!1 &688608799
 GameObject:
   m_ObjectHideFlags: 0
