@@ -9,11 +9,7 @@ public class LevelManager : MonoBehaviour
 {
     public GameObject[] levels;
     private int currentLevel = 0;
-    public int CurrentLevel
-    {
-        get => currentLevel;
-    }
-
+    public int CurrentLevel { get => currentLevel; } // used to inactivate portals in past / future levels.
     private float pullbackTimer;
 
     private GameObject lastLevel;
@@ -234,7 +230,7 @@ public class LevelManager : MonoBehaviour
 
         public void LastLevelPullback(float pullbackTime)
         {
-            if (timeCooldown < 0 && currentLevel > 1)
+            if (timeCooldown < 0 && currentLevel >1)
             {
                 StartCoroutine("Flicker"); // Make screen flicker
             GameObject.Find("Player").transform.parent = transHolder.transform;
