@@ -1095,7 +1095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5699918765522936541, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
       propertyPath: m_TagString
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5699918765522936543, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
       propertyPath: m_RootOrder

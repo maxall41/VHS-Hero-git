@@ -16,7 +16,7 @@ public class Portal : MonoBehaviour
         int levelDetector = GameObject.Find("levelman").GetComponent<LevelManager>().CurrentLevel;
         if (this.gameObject.tag != levelDetector.ToString())
         {
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
         }
         //inactivate portals in past/future levels
         
