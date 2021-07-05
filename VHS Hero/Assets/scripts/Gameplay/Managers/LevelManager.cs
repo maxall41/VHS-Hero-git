@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Lean.Pool;
 
 public class LevelManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class LevelManager : MonoBehaviour
     private float pullbackTimer;
 
     private GameObject lastLevel;
+
+    public GameObject Knob;
 
     private bool pullbacked;
 
@@ -47,7 +50,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
+        lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
         currentLevel++;
         playerStartPos = GameObject.Find("Player").transform.position;
 
@@ -55,11 +58,10 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
-        //TODO: Fix voice line system on restart
         GameObject.Find("Player").transform.parent = transHolder.transform;
         StartCoroutine("flicker");
-        Destroy(lastLevel);
-        lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
+        LeanPool.Despawn(lastLevel);
+        lastLevel = LeanPool.Spawn(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
 
 
         GameObject.Find("Player").transform.position = new Vector3(5, 3,0);
@@ -69,6 +71,8 @@ public class LevelManager : MonoBehaviour
         GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = false;
         keysPicked.Clear();
         buttonsActivated.Clear();
+
+        Knob.SetActive(false);
     }
 
     private void Snap(GameObject gb)
@@ -117,8 +121,9 @@ public class LevelManager : MonoBehaviour
         {
             // Pulls player back to current level
             GameObject.Find("Player").transform.parent = transHolder.transform;
-            DestroyImmediate(lastLevel);
-            lastLevel = Instantiate(levels[lastLevelIndex], new Vector3(0,0, 0), Quaternion.identity);
+            // DestroyImmediate(lastLevel);
+            LeanPool.Despawn(lastLevel);
+            lastLevel = LeanPool.Spawn(levels[lastLevelIndex], new Vector3(0,0, 0), Quaternion.identity);
             GameObject.Find("Player").transform.parent = lastLevel.transform;
             pullbacked = false;
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_pullback();
@@ -157,8 +162,8 @@ public class LevelManager : MonoBehaviour
                 Debug.Log(currentLevel);
                 StartCoroutine("Flicker"); // Make screen flicker
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
-                Destroy(lastLevel);
-                lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
+                LeanPool.Despawn(lastLevel);
+                lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
                 GameObject.Find("Player").transform.parent = lastLevel.transform;
                 currentLevel++;
                 TimelineMovementEvent();
@@ -234,14 +239,15 @@ public class LevelManager : MonoBehaviour
             {
                 StartCoroutine("Flicker"); // Make screen flicker
             GameObject.Find("Player").transform.parent = transHolder.transform;
-            DestroyImmediate(lastLevel);
+            //DestroyImmediate(lastLevel);
+            LeanPool.Despawn(lastLevel);
 
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
 
                   
                  // Weird mess of code
                 lastLevelIndex = currentLevel - 1;
-                lastLevel = Instantiate(levels[currentLevel - 2], new Vector3(0, 0, 0), Quaternion.identity);
+                lastLevel = LeanPool.Spawn(levels[currentLevel - 2], new Vector3(0, 0, 0), Quaternion.identity);
             GameObject.Find("Player").transform.parent = lastLevel.transform;
             // Snap to nearest point
             Snap(GameObject.Find("Player"));
@@ -261,14 +267,15 @@ public class LevelManager : MonoBehaviour
         {
             StartCoroutine("Flicker"); // Make screen flicker
             GameObject.Find("Player").transform.parent = transHolder.transform;
-            DestroyImmediate(lastLevel);
+            //DestroyImmediate(lastLevel);
+            LeanPool.Despawn(lastLevel);
 
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
 
 
             // Weird mess of code
             lastLevelIndex = currentLevel - 1;
-            lastLevel = Instantiate(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
+            lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
             GameObject.Find("Player").transform.parent = lastLevel.transform;
             // Snap to nearest point
             Snap(GameObject.Find("Player"));

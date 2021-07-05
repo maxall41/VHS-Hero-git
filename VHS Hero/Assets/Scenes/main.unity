@@ -14862,6 +14862,7 @@ MonoBehaviour:
   - {fileID: 161935551768623471, guid: 806db11699331f342ab81cdf2779200e, type: 3}
   - {fileID: 3214855374762768396, guid: dba0129a1ab851d40a57f4000e589cf7, type: 3}
   - {fileID: 5011922813342244746, guid: 4cee453911a0d6444a35198497989a8b, type: 3}
+  Knob: {fileID: 1025797872}
   keysPicked: []
   buttonsActivated: []
   travelStatusText: {fileID: 1506212979}
