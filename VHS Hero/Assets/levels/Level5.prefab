@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 7465859499217895368}
   m_Layer: 6
   m_Name: Changing tile
-  m_TagString: Ground
+  m_TagString: portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -526,13 +526,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8791774728883539469}
     m_Modifications:
+    - target: {fileID: 2444862452083727216, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
+      propertyPath: levelID
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5699918765522936541, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
       propertyPath: m_Name
       value: Portal
       objectReference: {fileID: 0}
     - target: {fileID: 5699918765522936541, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
       propertyPath: m_TagString
-      value: 5
+      value: portal
       objectReference: {fileID: 0}
     - target: {fileID: 5699918765522936543, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
       propertyPath: m_RootOrder

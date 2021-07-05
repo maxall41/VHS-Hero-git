@@ -1042,13 +1042,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8196623335270040114}
     m_Modifications:
+    - target: {fileID: 2444862452083727216, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
+      propertyPath: levelID
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5699918765522936541, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
       propertyPath: m_Name
       value: Portal
       objectReference: {fileID: 0}
     - target: {fileID: 5699918765522936541, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
       propertyPath: m_TagString
-      value: 2
+      value: portal
       objectReference: {fileID: 0}
     - target: {fileID: 5699918765522936543, guid: 0a5aff056f1f0814e99826f736c70099, type: 3}
       propertyPath: m_RootOrder

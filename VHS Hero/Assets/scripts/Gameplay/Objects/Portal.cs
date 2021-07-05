@@ -9,16 +9,14 @@ public class Portal : MonoBehaviour
     private bool watchForE = false;
 
     public GameObject Knob;
+
+    public string levelID;
+
+    private bool active;
    
 
     private void Start()
     {
-        int levelDetector = GameObject.Find("levelman").GetComponent<LevelManager>().CurrentLevel;
-        if (this.gameObject.tag != levelDetector.ToString())
-        {
-            this.gameObject.SetActive(false);
-        }
-        //inactivate portals in past/future levels
         
         Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
     }
@@ -30,6 +28,27 @@ public class Portal : MonoBehaviour
             watchForE = true;
         }
         
+    }
+
+    public void TimelineMovementEvent()
+    {
+        // Deactivate portals in past/future levels
+        int levelDetector = GameObject.Find("levelman").GetComponent<LevelManager>().CurrentLevel;
+        Debug.Log("test -AB: ");
+        Debug.Log(levelID);
+        Debug.Log(levelDetector.ToString());
+        if (levelID != levelDetector.ToString())
+        {
+            // Removed because it was causing issues with pooling
+            //this.gameObject.SetActive(false);
+            this.gameObject.name = "INACTIVE PORTAL";
+            active = false;
+        }
+        else
+        {
+            this.gameObject.name = "ACTIVE PORTAL";
+            active = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -44,7 +63,8 @@ public class Portal : MonoBehaviour
     {
         if (watchForE == true)
         {
-            if (Input.GetKeyDown(KeyCode.E) && GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == true)
+            // Check if portal is active and player has key before activating. We will make some closed door art in the the future for the deactivated state
+            if (Input.GetKeyDown(KeyCode.E) && GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == true && active == true)
             {
                 Knob.SetActive(false);
                 GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = false;

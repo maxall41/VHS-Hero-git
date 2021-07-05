@@ -211,6 +211,14 @@ public class LevelManager : MonoBehaviour
 
         private void TimelineMovementEvent()
         {
+
+            GameObject[] portals = GameObject.FindGameObjectsWithTag("portal");
+        Debug.Log("TME");
+
+            foreach(GameObject portal in portals)
+            {
+                portal.GetComponent<Portal>().TimelineMovementEvent();
+            }
             
             GameObject.Find("AQM").GetComponent<AudioQueue>().queuedPlayers.Clear(); // Remove queued players to prevent incorrect count
             for (int i = 0;i < keysPicked.Count;i++)
