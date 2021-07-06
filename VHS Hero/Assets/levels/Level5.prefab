@@ -98,7 +98,7 @@ MonoBehaviour:
   - {x: 13.00003, y: -7, z: 0}
   m_ShapePathHash: 3133134
   m_Mesh: {fileID: 0}
-  m_InstanceId: -55820
+  m_InstanceId: 31110
 --- !u!1 &1587553067372797660
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   - {x: -15.999971, y: -5, z: 0}
   m_ShapePathHash: 1359305
   m_Mesh: {fileID: 0}
-  m_InstanceId: -55800
+  m_InstanceId: 31098
 --- !u!1 &2517923868916448939
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +332,7 @@ MonoBehaviour:
   - {x: -13.999971, y: 1, z: 0}
   m_ShapePathHash: 8646711
   m_Mesh: {fileID: 0}
-  m_InstanceId: -55810
+  m_InstanceId: 31130
 --- !u!1 &6176543693261117816
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +475,7 @@ MonoBehaviour:
   - {x: -14.999971, y: -9, z: 0}
   m_ShapePathHash: 1021491
   m_Mesh: {fileID: 0}
-  m_InstanceId: -55840
+  m_InstanceId: 31132
 --- !u!1 &7774146826155589015
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +578,7 @@ MonoBehaviour:
   - {x: 10.00003, y: -9, z: 0}
   m_ShapePathHash: 638357
   m_Mesh: {fileID: 0}
-  m_InstanceId: -55830
+  m_InstanceId: 31120
 --- !u!1 &7907222321152247523
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 7331641848982497507}
   m_Layer: 6
   m_Name: Changing tile
-  m_TagString: portal
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
