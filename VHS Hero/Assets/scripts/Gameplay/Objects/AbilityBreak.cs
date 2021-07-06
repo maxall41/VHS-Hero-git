@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityEternity : MonoBehaviour
+public class AbilityBreak : MonoBehaviour
 {
-
+    // Start is called before the first frame update
 
     private bool watchForPickup;
     EffectOnPick effect = new EffectOnPick();
@@ -33,7 +33,7 @@ public class AbilityEternity : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                GameObject.Find("Player").GetComponent<PlayerDataHolder>().Eternity = true;
+                GameObject.Find("Player").GetComponent<PlayerDataHolder>().BreakAbility = true;
                 effect.PickAbility();
                 Destroy(gameObject);
             }
