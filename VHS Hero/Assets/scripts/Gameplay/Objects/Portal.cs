@@ -12,7 +12,7 @@ public class Portal : MonoBehaviour
 
     public string levelID;
 
-    private bool active;
+    private bool active = true;
    
 
     private void Start()
@@ -63,6 +63,7 @@ public class Portal : MonoBehaviour
     {
         if (watchForE == true)
         {
+
             // Check if portal is active and player has key before activating. We will make some closed door art in the the future for the deactivated state
             if (Input.GetKeyDown(KeyCode.E) && GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == true && active == true)
             {
