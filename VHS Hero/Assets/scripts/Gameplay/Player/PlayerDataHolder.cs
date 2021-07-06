@@ -14,7 +14,7 @@ public class PlayerDataHolder : MonoBehaviour
     //new abilities
     private bool doubleJump = false;
     private bool climbWall = false;
-    private bool eternity = false;
+    private bool eternity = false; // player will not be automatically pulled back to current level
 
     public bool FirstGreaterKey { get => firstGreaterKey; set => firstGreaterKey = value; }
     public bool SecondGreaterKey { get => secondGreaterKey; set => secondGreaterKey = value; }
