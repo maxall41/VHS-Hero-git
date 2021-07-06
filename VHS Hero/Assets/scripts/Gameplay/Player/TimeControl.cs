@@ -6,6 +6,7 @@ public class TimeControl : MonoBehaviour
 {
     private float timeHeld;
     private float timeHeld2;
+    private float timeHeld3;
     public float pullBackAfterSeconds;
     // Start is called before the first frame update
     void Start()
@@ -42,5 +43,22 @@ public class TimeControl : MonoBehaviour
         {
             GameObject.Find("levelman").GetComponent<LevelManager>().LastLevelPullback(pullBackAfterSeconds);
         }
+
+
+        //explode!
+        if (Input.GetKey(KeyCode.R))
+        {
+            timeHeld3 += Time.deltaTime;
+        }
+        else
+        {
+            timeHeld3 = 0;
+        }
+
+        if (timeHeld3 > 1)
+        {
+            GameObject.Find("levelman").GetComponent<LevelManager>().Restart();
+        }
+
     }
 }
