@@ -12,7 +12,7 @@ public class Portal : MonoBehaviour
 
     public string levelID;
 
-    private bool active;
+    private bool active = true;
    
 
     private void Start()
