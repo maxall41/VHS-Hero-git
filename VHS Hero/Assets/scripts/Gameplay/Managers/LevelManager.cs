@@ -216,6 +216,7 @@ public class LevelManager : MonoBehaviour
 
             foreach(GameObject portal in portals)
             {
+            Debug.Log(portal.name);
                 portal.GetComponent<Portal>().TimelineMovementEvent();
             }
             
