@@ -53,7 +53,6 @@ public class LevelManager : MonoBehaviour
         lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
         currentLevel++;
         playerStartPos = GameObject.Find("Player").transform.position;
-
     }
 
     public void Restart()

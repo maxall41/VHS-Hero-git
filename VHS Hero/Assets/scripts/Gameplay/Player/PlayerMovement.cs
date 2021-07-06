@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	float jumpPressRemember;
 
+	public AudioSource walkSFX;
+
 	public Animator animator;
 	
 	// Update is called once per frame
@@ -78,16 +80,23 @@ public class PlayerMovement : MonoBehaviour {
 		//only control the player if grounded or airControl is turned on
 		if (m_Grounded || m_AirControl)
 		{
-			if (move > 0.2 || move < -0.2)
+			if (move > 0.3 || move < -0.3)
             {
 				animator.SetBool("walk", true);
 			} else
             {
 				animator.SetBool("walk", false);
 			}
+			if (move > 0.3 || move < -0.3 && walkSFX.isPlaying == false && m_Grounded)
+			{
+				//TODO: Fix walking sound
+				//walkSFX.volume = Random.Range(0.8F, 1);
+				//walkSFX.pitch = Random.Range(0.8F, 1.1F);
+				//walkSFX.Play();
+			}
 
-			// Enable the collider when not crouching
-			if (m_CrouchDisableCollider != null)
+				// Enable the collider when not crouching
+				if (m_CrouchDisableCollider != null)
 				m_CrouchDisableCollider.enabled = true;
 
 
