@@ -9,6 +9,8 @@ TagManager:
   - Ground
   - cup
   - portal
+  - MenuManager
+  - MusicManager
   layers:
   - Default
   - TransparentFX

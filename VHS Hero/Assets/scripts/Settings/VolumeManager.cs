@@ -10,11 +10,13 @@ public class VolumeManager : MonoBehaviour
     public AudioMixer mixer;
     public Slider slider;
 
+    public float defaultValue;
+
     public string exposedVol;
 
     void Start()
     {
-        slider.value = PlayerPrefs.GetFloat(exposedVol, 0.75f);
+        slider.value = PlayerPrefs.GetFloat(exposedVol, defaultValue);
     }
     public void SetLevel(float sliderValue)
     {

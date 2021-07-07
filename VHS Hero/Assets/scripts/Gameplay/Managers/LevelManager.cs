@@ -48,11 +48,39 @@ public class LevelManager : MonoBehaviour
 
     private Vector3 playerStartPos;
 
+    public GameObject Past;
+
+    public GameObject Present;
+
+    public GameObject Future;
+
     private void Start()
     {
         lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
         currentLevel++;
         playerStartPos = GameObject.Find("Player").transform.position;
+    }
+
+
+    private void InFuture()
+    {
+        Present.SetActive(false);
+        Past.SetActive(false);
+        Future.SetActive(true);
+    }
+
+    private void InPast()
+    {
+        Present.SetActive(false);
+        Future.SetActive(false);
+        Past.SetActive(true);
+    }
+
+    private void InPresent()
+    {
+        Future.SetActive(false);
+        Past.SetActive(false);
+        Present.SetActive(true);
     }
 
     public void Restart()
@@ -108,6 +136,7 @@ public class LevelManager : MonoBehaviour
         return closest;
     }
 
+
     private void Update()
     {
         timeCooldown -= Time.deltaTime;
@@ -128,6 +157,8 @@ public class LevelManager : MonoBehaviour
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_pullback();
 
             Snap(GameObject.Find("Player"));
+
+            InPresent();
 
             TimelineMovementEvent();
 
@@ -261,6 +292,8 @@ public class LevelManager : MonoBehaviour
             // Snap to nearest point
             Snap(GameObject.Find("Player"));
 
+            InPast();
+
             if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().Eternity == false)//Player with ability Eternity will not be pulled back 
             {
                 // Stuff
@@ -294,6 +327,8 @@ public class LevelManager : MonoBehaviour
             // Snap to nearest point
             Snap(GameObject.Find("Player"));
             // Stuff
+
+            InFuture();
 
             if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().Eternity == false)
             {
