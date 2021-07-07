@@ -194,6 +194,9 @@ public class PlayerMovement : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+
+		// DeFlip hint text
+		GameObject.Find("playerHintText").GetComponent<DeFlip>().DeFlip_F();
 	}
 
 	public void Climb(float climb)

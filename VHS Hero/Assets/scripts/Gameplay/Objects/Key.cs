@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Key : MonoBehaviour
 {
@@ -9,43 +10,70 @@ public class Key : MonoBehaviour
 
     public List<string> lrh = new List<string>();
 
+    public TextMeshProUGUI hintText;
+
+    public string hint;
+
     public GameObject Knob;
 
     private void Start()
     {
         Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        //hintText.text = hint;
+       if (PlayerPrefs.GetInt("KeyHintShown") != 0)
         {
-            watchForPickup = true;
-
+            StartCoroutine(Type(hintText, hint, 0.02F));
+            PlayerPrefs.SetInt("KeyHintShown", 0);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == false)
         {
-            watchForPickup = false;
+            GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = true;
+            lrh = GameObject.Find("levelman").GetComponent<LevelManager>().keysPicked;
+            lrh.Add(gameObject.name);
+            Knob.SetActive(true);
+            Destroy(gameObject);
         }
     }
 
-
-    private void Update()
+    IEnumerator Type(TextMeshProUGUI text, string textToType,float typingSpeed)
     {
-        if (watchForPickup == true)
+        foreach (char letter in textToType.ToCharArray())
         {
-            if (Input.GetKeyDown(KeyCode.E) && GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == false)
-            {
-                GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = true;
-                lrh = GameObject.Find("levelman").GetComponent<LevelManager>().keysPicked;
-                lrh.Add(gameObject.name);
-                Knob.SetActive(true);
-                Destroy(gameObject);
-            }
+            text.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
         }
     }
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.name == "Player")
+    //    {
+    //        watchForPickup = false;
+    //    }
+    //}
+
+
+    //private void Update()
+    //{
+    //    if (watchForPickup == true)
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.E) && GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == false)
+    //        {
+    //            GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = true;
+    //            lrh = GameObject.Find("levelman").GetComponent<LevelManager>().keysPicked;
+    //            lrh.Add(gameObject.name);
+    //            Knob.SetActive(true);
+    //            Destroy(gameObject);
+    //        }
+    //    }
+    //}
 }

@@ -54,6 +54,10 @@ public class LevelManager : MonoBehaviour
 
     public GameObject Future;
 
+    public TextMeshProUGUI hintText;
+
+    public string hint;
+
     private void Start()
     {
         lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
@@ -164,16 +168,16 @@ public class LevelManager : MonoBehaviour
 
         }
 
-        if (timeCooldown < 0)
-        {
-            travelStatusText.text = "Enabled";
-            travelStatusText.color = new Color32(0, 255, 0, 255);
-        }
-        else
-        {
-            travelStatusText.text = "Disabled";
-            travelStatusText.color = new Color32(255, 0, 0, 255);
-        }
+        //if (timeCooldown < 0)
+        //{
+        //    travelStatusText.text = "Enabled";
+        //    travelStatusText.color = new Color32(0, 255, 0, 255);
+        //}
+        //else
+        //{
+        //    travelStatusText.text = "Disabled";
+        //    travelStatusText.color = new Color32(255, 0, 0, 255);
+        //}
 
     }
 
@@ -188,6 +192,14 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
+                // Remove old hints
+                GameObject[] hints = GameObject.FindGameObjectsWithTag("hint");
+
+                foreach (GameObject hint in hints)
+                {
+                    Destroy(hint);
+                }
+
                 GameObject.Find("Player").transform.parent = transHolder.transform;
                 Debug.Log(currentLevel);
                 StartCoroutine("Flicker"); // Make screen flicker
@@ -202,6 +214,30 @@ public class LevelManager : MonoBehaviour
             nextLevelCooldown = 0.5F;
         }
 
+    }
+
+    private void TimeTravel()
+    {
+        if (PlayerPrefs.GetInt("TimeTravelHint") != 0)
+        {
+            PlayerPrefs.SetInt("TimeTravelHint", 0);
+            StartCoroutine(Type(hintText, hint, 0.03F));
+        }
+    }
+
+    IEnumerator Type(TextMeshProUGUI text, string textToType, float typingSpeed)
+    {
+        foreach (char letter in textToType.ToCharArray())
+        {
+            text.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+        yield return new WaitForSeconds(3);
+        foreach (char letter in text.text.ToCharArray())
+        {
+            text.text = text.text.Remove(text.text.Length - 1); ;
+            yield return new WaitForSeconds(typingSpeed);
+        }
     }
 
     private bool IntToBool(int input)
@@ -303,6 +339,7 @@ public class LevelManager : MonoBehaviour
                 cooldownDisplay = 0;
             }
             TimelineMovementEvent();
+            TimeTravel();
         }
 
     }
@@ -329,6 +366,7 @@ public class LevelManager : MonoBehaviour
             // Stuff
 
             InFuture();
+            TimeTravel();
 
             if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().Eternity == false)
             {

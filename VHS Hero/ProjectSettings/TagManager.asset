@@ -11,6 +11,8 @@ TagManager:
   - portal
   - MenuManager
   - MusicManager
+  - hint
+  - 1
   layers:
   - Default
   - TransparentFX
