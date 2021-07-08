@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1681404425950344669}
   - component: {fileID: 1681404425950344668}
   - component: {fileID: 650721467674755061}
-  - component: {fileID: 4099397881708728287}
   - component: {fileID: 5455143063312040697}
   m_Layer: 0
   m_Name: Key
@@ -32,6 +31,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1780233086442070373}
+  - {fileID: 5133907487379162881}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -99,10 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lrh: []
-  hintText: {fileID: 6768619154722706774}
-  hint: I have been longing for that
   Knob: {fileID: 0}
---- !u!61 &4099397881708728287
+--- !u!61 &5455143063312040697
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +113,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0021383762, y: -0.044755608}
+  m_Offset: {x: 0, y: -0.006728202}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -126,34 +124,83 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.0324855, y: 0.55048877}
+  m_Size: {x: 0.86197144, y: 0.47319847}
   m_EdgeRadius: 0
---- !u!61 &5455143063312040697
+--- !u!1 &3624914180216598306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5133907487379162881}
+  - component: {fileID: 3179119221513022554}
+  - component: {fileID: 5371223159849673090}
+  m_Layer: 0
+  m_Name: hintText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5133907487379162881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624914180216598306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1681404425950344669}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &3179119221513022554
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681404425950344659}
+  m_GameObject: {fileID: 3624914180216598306}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.000000029802322, y: -0.04506448}
+  m_Offset: {x: 0, y: -0.0069703013}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8125, y: 0.4375}
-    newSize: {x: 0.8125, y: 0.4375}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.22070998, y: 0.549871}
+  m_Size: {x: 0.83271444, y: 0.47026226}
   m_EdgeRadius: 0
+--- !u!114 &5371223159849673090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624914180216598306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95f0302ff5d043a496657c3b6f85105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hint: I have been longing for that
+  hintText: {fileID: 6768619154722706774}
+  id: keyHint
+  load: []
+  empty: []
 --- !u!1 &4614120580625529751
 GameObject:
   m_ObjectHideFlags: 0

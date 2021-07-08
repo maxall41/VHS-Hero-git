@@ -10,10 +10,6 @@ public class Key : MonoBehaviour
 
     public List<string> lrh = new List<string>();
 
-    public TextMeshProUGUI hintText;
-
-    public string hint;
-
     public GameObject Knob;
 
     private void Start()
@@ -24,16 +20,6 @@ public class Key : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //hintText.text = hint;
-       if (PlayerPrefs.GetInt("KeyHintShown") != 0)
-        {
-            StartCoroutine(Type(hintText, hint, 0.02F));
-            PlayerPrefs.SetInt("KeyHintShown", 0);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
         if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == false)
         {
             GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = true;
@@ -41,15 +27,6 @@ public class Key : MonoBehaviour
             lrh.Add(gameObject.name);
             Knob.SetActive(true);
             Destroy(gameObject);
-        }
-    }
-
-    IEnumerator Type(TextMeshProUGUI text, string textToType,float typingSpeed)
-    {
-        foreach (char letter in textToType.ToCharArray())
-        {
-            text.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
         }
     }
 

@@ -12,30 +12,11 @@ public class AbilityClimb : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            watchForPickup = true;
+            GameObject.Find("Player").GetComponent<PlayerDataHolder>().ClimbWall = true;
+            effect.PickAbility();
+            Destroy(gameObject);
 
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.name == "Player")
-        {
-            watchForPickup = false;
-        }
-    }
-
-
-    private void Update()
-    {
-        if (watchForPickup == true)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                GameObject.Find("Player").GetComponent<PlayerDataHolder>().ClimbWall = true;
-                effect.PickAbility();
-                Destroy(gameObject);
-            }
-        }
-    }
 }
