@@ -50,6 +50,7 @@ public class CreditsManager : MonoBehaviour
             if (timeRemaining == 0)
             {
                 peopleSlots[i].text = people[i];
+                Debug.Log(people);
                 Debug.Log(peopleSlots.Length);
                 if (i == peopleSlots.Length - 1)
                 {

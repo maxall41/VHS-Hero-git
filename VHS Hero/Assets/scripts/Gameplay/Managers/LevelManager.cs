@@ -89,10 +89,13 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
+        keysPicked.Clear();
+        buttonsActivated.Clear();
         GameObject.Find("Player").transform.parent = transHolder.transform;
         StartCoroutine("flicker");
-        LeanPool.Despawn(lastLevel);
-        lastLevel = LeanPool.Spawn(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
+        // Not using LeanPool because it causes issues with respawning objects
+        Destroy(lastLevel);
+        lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
 
 
         GameObject.Find("Player").transform.position = new Vector3(5, 3, 0);
@@ -100,8 +103,6 @@ public class LevelManager : MonoBehaviour
 
         // Reset saved parameters
         GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = false;
-        keysPicked.Clear();
-        buttonsActivated.Clear();
 
         Knob.SetActive(false);
     }
@@ -207,9 +208,16 @@ public class LevelManager : MonoBehaviour
                 LeanPool.Despawn(lastLevel);
                 lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
                 GameObject.Find("Player").transform.parent = lastLevel.transform;
+                Debug.Log("Current level: " + currentLevel);
+                if (currentLevel == 2)
+                {
+                    GameObject.Find("Keys").GetComponent<Fade>().FadeIn();
+                }
+
                 currentLevel++;
                 TimelineMovementEvent();
                 GameObject.Find("Tutorial").GetComponent<TextPlayer>().NextLevel();
+
             }
             nextLevelCooldown = 0.5F;
         }

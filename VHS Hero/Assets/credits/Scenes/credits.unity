@@ -1498,7 +1498,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 04b81a8bfd8ca4dd2bcb84fd25854c21, type: 2}
+  sharedProfile: {fileID: 11400000, guid: d982f5e2f39e34015b0fcc307969eb64, type: 2}
 --- !u!4 &165426862
 Transform:
   m_ObjectHideFlags: 0
@@ -9672,9 +9672,13 @@ MonoBehaviour:
   people:
   - '@maxall4'
   - '@Lexicon86'
+  - Damarus #1191
+  - IanX#7979
   peopleSlots:
   - {fileID: 1558310884381546148}
   - {fileID: 7906978309783723153}
+  - {fileID: 4392911973519434163}
+  - {fileID: 8239779205431779172}
   catalyst: 0
   end: 0
   next: {fileID: 608585799}
@@ -9707,7 +9711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -9855,10 +9859,16 @@ MonoBehaviour:
   titleText: The End
   people:
   - '     '
-  - '     '
+  - '   '
+  - '   '
+  - '   '
+  - '    '
   peopleSlots:
   - {fileID: 1558310884381546148}
   - {fileID: 9058543017876692097}
+  - {fileID: 7906978309783723153}
+  - {fileID: 4392911973519434163}
+  - {fileID: 8239779205431779172}
   catalyst: 0
   end: 1
   next: {fileID: 0}
