@@ -19,7 +19,7 @@ public class Button : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player" && collision.relativeVelocity.y >0)
+        if (collision.gameObject.name == "Player" && collision.relativeVelocity.y !=0)
         {
             IsPressed = true;
             animator.SetBool("pressed", true);

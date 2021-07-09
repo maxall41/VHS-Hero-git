@@ -9,7 +9,7 @@ using Lean.Pool;
 public class LevelManager : MonoBehaviour
 {
     public GameObject[] levels;
-    private int currentLevel = 0;
+    private int currentLevel = 1; //for debug
     public int CurrentLevel { get => currentLevel; } // used to inactivate portals in past / future levels.
     private float pullbackTimer;
 
