@@ -54,7 +54,11 @@ public class LevelManager : MonoBehaviour
 
     public GameObject Future;
 
+    private Vector3 lastDoorPos;
+
     public TextMeshProUGUI hintText;
+
+    public GameObject[] greaterKeys;
 
     public string hint;
 
@@ -98,13 +102,18 @@ public class LevelManager : MonoBehaviour
         lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
 
 
-        GameObject.Find("Player").transform.position = new Vector3(5, 3, 0);
-
+        GameObject.Find("Player").transform.position = lastDoorPos;
+           
 
         // Reset saved parameters
         GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = false;
 
         Knob.SetActive(false);
+
+        foreach(GameObject gk in greaterKeys)
+        {
+            gk.SetActive(false);
+        }
     }
 
     private void Snap(GameObject gb)
@@ -144,6 +153,12 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Restart();
+        }
+
         timeCooldown -= Time.deltaTime;
         pullbackTimer -= Time.deltaTime;
         cooldownDisplay += Time.deltaTime;
@@ -204,6 +219,8 @@ public class LevelManager : MonoBehaviour
 
                 GameObject.Find("Player").transform.parent = transHolder.transform;
                 Debug.Log(currentLevel);
+
+                lastDoorPos = GameObject.Find("Player").transform.position;
                 StartCoroutine("Flicker"); // Make screen flicker
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
                 LeanPool.Despawn(lastLevel);
