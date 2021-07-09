@@ -30,13 +30,13 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - LDtkUnity.Runtime
+    - Assembly-CSharp-firstpass
     - Assembly-CSharp
     - LeanTween
     - Tayx.Graphy
     - LeanCommon
     - LeanPool
     - Settings
-    - Assembly-CSharp-firstpass
     - LDtkUnity.Editor
     - PsdPlugin
     - Tayx.Graphy.Editor

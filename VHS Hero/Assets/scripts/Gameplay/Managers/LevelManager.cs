@@ -188,6 +188,7 @@ public class LevelManager : MonoBehaviour
         {
             if (currentLevel > levels.Length - 1)
             {
+                GameObject.Find("MusicManager").GetComponent<MusicManager>().GoToCredits(); // Enable credits music
                 SceneManager.LoadScene("credits");
 
             }

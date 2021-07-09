@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ResetGameplayParams : MonoBehaviour
 {
@@ -13,7 +14,13 @@ public class ResetGameplayParams : MonoBehaviour
     {
         load = ES3.Load("gameplayParams", empty);
 
-        foreach(string loaded in load)
+
+        // Removed all duplicates
+        load = load.Distinct().ToList();
+
+        ES3.Save("gameplayParams", load); 
+
+        foreach (string loaded in load)
         {
             PlayerPrefs.SetInt(loaded, 1);
         }

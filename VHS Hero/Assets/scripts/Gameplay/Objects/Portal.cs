@@ -21,7 +21,7 @@ public class Portal : MonoBehaviour
         Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if portal is active and player has key before activating. We will make some closed door art in the the future for the deactivated state
         if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == true && active == true)

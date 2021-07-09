@@ -24,7 +24,7 @@ public class hintTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Trigger");
+        Debug.Log("Trigger: " + collision.gameObject.name);
         if (PlayerPrefs.GetInt(id) != 0 && collision.gameObject.name == "Player")
         {
             PlayerPrefs.SetInt(id, 0);

@@ -12,11 +12,18 @@ public class MusicManager : MonoBehaviour
 
     public AudioClip settingsMusic;
 
+    public AudioClip creditsMusic;
+
     public AudioMixer musicMixer;
 
     public void GoToGameplay()
     {
         StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 0, "Gameplay"));
+    }
+
+    public void GoToCredits()
+    {
+        StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 0, "credits"));
     }
 
 
@@ -42,6 +49,13 @@ public class MusicManager : MonoBehaviour
         if (targetScene == "Gameplay")
         {
             musicSource.clip = defaultGameplayMusic;
+            StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 1, "None"));
+            musicSource.Play();
+        }
+
+        if (targetScene == "credits")
+        {
+            musicSource.clip = creditsMusic;
             StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 1, "None"));
             musicSource.Play();
         }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ClimbCheck : MonoBehaviour
 {
-    // Start is called before the first frame update
-    Vector2 vector2 = new Vector2(0, 0);
    
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,7 +11,7 @@ public class ClimbCheck : MonoBehaviour
             if (collision.gameObject.tag == "Ground")
             {
                 this.gameObject.GetComponentInParent<PlayerMovement>().DoubleJumpCount = 0;
-                this.gameObject.GetComponentInParent<Rigidbody2D>().velocity = vector2;
+                this.gameObject.GetComponentInParent<Rigidbody2D>().velocity = new Vector2(0,0);
                 this.gameObject.GetComponentInParent<Rigidbody2D>().gravityScale = 0;
                 this.gameObject.GetComponentInParent<PlayerMovement>().Climbing = true;
                 this.gameObject.GetComponentInParent<PlayerMovement>().Grounded = false;
