@@ -35,12 +35,7 @@ public class MusicManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-
-    void Update()
-    {
-        
     }
 
     private void FinishedAudioFade(string targetScene)

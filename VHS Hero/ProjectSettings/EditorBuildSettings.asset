@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/settings.unity
     guid: e50643c3fa2394af5968878d41bd907e
+  - enabled: 1
+    path: Assets/Scenes/completeNoKeys.unity
+    guid: 8e5c195c7d46f4626915d32a39df29a0
+  - enabled: 1
+    path: Assets/Scenes/completeAllKeys.unity
+    guid: 86b5ad081af8e46518aba900492c9ba0
   m_configObjects: {}
