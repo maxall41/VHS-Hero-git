@@ -23,4 +23,16 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Settings");
     }
+
+    public void GoHome()
+    {
+        SceneManager.LoadScene("menu");
+        GameObject.Find("MusicManager").GetComponent<MusicManager>().GoToMenu();
+    }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
+        GameObject.Find("MusicManager").GetComponent<MusicManager>().GoToCredits();
+    }
 }

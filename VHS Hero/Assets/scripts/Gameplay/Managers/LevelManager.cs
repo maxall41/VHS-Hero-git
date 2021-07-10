@@ -58,15 +58,23 @@ public class LevelManager : MonoBehaviour
 
     public TextMeshProUGUI hintText;
 
-    public GameObject[] greaterKeys;
+    public List<Vector3> instPos = new List<Vector3>();
 
     public string hint;
 
     private void Start()
     {
-        lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
+        lastLevel = LeanPool.Spawn(levels[currentLevel], instPos[currentLevel], Quaternion.identity);
         currentLevel++;
         playerStartPos = GameObject.Find("Player").transform.position;
+
+        foreach (GameObject level in levels)
+        {
+            if (level == null)
+            {
+                Debug.LogError("Level in level manager is missing!");
+            }
+        }
     }
 
 
@@ -95,11 +103,10 @@ public class LevelManager : MonoBehaviour
     {
         keysPicked.Clear();
         buttonsActivated.Clear();
-        GameObject.Find("Player").transform.parent = transHolder.transform;
         StartCoroutine("flicker");
         // Not using LeanPool because it causes issues with respawning objects
         Destroy(lastLevel);
-        lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
+        lastLevel = Instantiate(levels[currentLevel - 1], instPos[currentLevel - 1], Quaternion.identity);
 
 
         GameObject.Find("Player").transform.position = lastDoorPos;
@@ -109,11 +116,6 @@ public class LevelManager : MonoBehaviour
         GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = false;
 
         Knob.SetActive(false);
-
-        foreach(GameObject gk in greaterKeys)
-        {
-            gk.SetActive(false);
-        }
     }
 
     private void Snap(GameObject gb)
@@ -125,7 +127,6 @@ public class LevelManager : MonoBehaviour
             closetsObject = FindClosestSnap();
             gb.transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y, 0);
             //gb.transform.position = new Vector3(gb.transform.position.x, gb.transform.position.y, 0);
-            GameObject.Find("Player").transform.parent = lastLevel.transform;
             Debug.Log("Snapped to " + closetsObject.name);
         }
     }
@@ -168,11 +169,9 @@ public class LevelManager : MonoBehaviour
         if (pullbackTimer < 0 && pullbacked == true)
         {
             // Pulls player back to current level
-            GameObject.Find("Player").transform.parent = transHolder.transform;
             // DestroyImmediate(lastLevel);
             LeanPool.Despawn(lastLevel);
-            lastLevel = LeanPool.Spawn(levels[lastLevelIndex], new Vector3(0, 0, 0), Quaternion.identity);
-            GameObject.Find("Player").transform.parent = lastLevel.transform;
+            lastLevel = LeanPool.Spawn(levels[lastLevelIndex], instPos[lastLevelIndex], Quaternion.identity);
             pullbacked = false;
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_pullback();
 
@@ -217,15 +216,13 @@ public class LevelManager : MonoBehaviour
                     Destroy(hint);
                 }
 
-                GameObject.Find("Player").transform.parent = transHolder.transform;
                 Debug.Log(currentLevel);
 
                 lastDoorPos = GameObject.Find("Player").transform.position;
                 StartCoroutine("Flicker"); // Make screen flicker
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
                 LeanPool.Despawn(lastLevel);
-                lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
-                GameObject.Find("Player").transform.parent = lastLevel.transform;
+                lastLevel = LeanPool.Spawn(levels[currentLevel], instPos[currentLevel], Quaternion.identity);
                 Debug.Log("Current level: " + currentLevel);
                 if (currentLevel == 2)
                 {
@@ -335,10 +332,9 @@ public class LevelManager : MonoBehaviour
 
     public void LastLevelPullback(float pullbackTime)
     {
-        if (timeCooldown < 0 && currentLevel > 1)
+        if (timeCooldown < 0 && currentLevel > 1 && pullbackTimer < 0)
         {
             StartCoroutine("Flicker"); // Make screen flicker
-            GameObject.Find("Player").transform.parent = transHolder.transform;
             //DestroyImmediate(lastLevel);
             LeanPool.Despawn(lastLevel);
 
@@ -347,8 +343,7 @@ public class LevelManager : MonoBehaviour
 
             // Weird mess of code
             lastLevelIndex = currentLevel - 1;
-            lastLevel = LeanPool.Spawn(levels[currentLevel - 2], new Vector3(0, 0, 0), Quaternion.identity);
-            GameObject.Find("Player").transform.parent = lastLevel.transform;
+            lastLevel = LeanPool.Spawn(levels[currentLevel - 2],instPos[currentLevel - 2], Quaternion.identity);
 
 
             // Snap to nearest point
@@ -373,10 +368,9 @@ public class LevelManager : MonoBehaviour
 
     public void NextLevelPullback(float pullbackTime)
     {
-        if (timeCooldown < 0 && currentLevel < levels.Length)
+        if (timeCooldown < 0 && currentLevel < levels.Length && pullbackTimer < 0)
         {
             StartCoroutine("Flicker"); // Make screen flicker
-            GameObject.Find("Player").transform.parent = transHolder.transform;
             //DestroyImmediate(lastLevel);
             LeanPool.Despawn(lastLevel);
 
@@ -385,8 +379,7 @@ public class LevelManager : MonoBehaviour
 
             // Weird mess of code
             lastLevelIndex = currentLevel - 1;
-            lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
-            GameObject.Find("Player").transform.parent = lastLevel.transform;
+            lastLevel = LeanPool.Spawn(levels[currentLevel], instPos[currentLevel], Quaternion.identity);
             // Snap to nearest point
             Snap(GameObject.Find("Player"));
             // Stuff

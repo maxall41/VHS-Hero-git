@@ -11,7 +11,7 @@ public class ClimbCheck : MonoBehaviour
             if (collision.gameObject.tag == "Ground")
             {
                 this.gameObject.GetComponentInParent<PlayerMovement>().DoubleJumpCount = 0;
-                this.gameObject.GetComponentInParent<Rigidbody2D>().velocity = new Vector2(0,0);
+                this.gameObject.GetComponentInParent<Rigidbody2D>().velocity = new Vector2(0, 0);
                 this.gameObject.GetComponentInParent<Rigidbody2D>().gravityScale = 0;
                 this.gameObject.GetComponentInParent<PlayerMovement>().Climbing = true;
                 this.gameObject.GetComponentInParent<PlayerMovement>().Grounded = false;
@@ -21,9 +21,24 @@ public class ClimbCheck : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (this.gameObject.GetComponentInParent<PlayerMovement>().Grounded == true)
+        if (Input.GetKey(KeyCode.W))
         {
-            this.gameObject.GetComponentInParent<PlayerMovement>().Climbing = false;
+            if (this.gameObject.GetComponentInParent<PlayerDataHolder>().ClimbWall == true && this.gameObject.GetComponentInParent<PlayerMovement>().Grounded == false)
+            {
+                this.gameObject.GetComponentInParent<PlayerMovement>().DoubleJumpCount = 0;
+                this.gameObject.GetComponentInParent<Rigidbody2D>().velocity = new Vector2(0,0);
+                this.gameObject.GetComponentInParent<Rigidbody2D>().gravityScale = 0;
+                this.gameObject.GetComponentInParent<PlayerMovement>().Climbing = true;
+                this.gameObject.GetComponentInParent<PlayerMovement>().Grounded = false;
+                if (collision.gameObject.tag == "Ground")
+                {
+                    this.gameObject.GetComponentInParent<PlayerMovement>().DoubleJumpCount = 0;
+                    this.gameObject.GetComponentInParent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                    this.gameObject.GetComponentInParent<Rigidbody2D>().gravityScale = 0;
+                    this.gameObject.GetComponentInParent<PlayerMovement>().Climbing = true;
+                    this.gameObject.GetComponentInParent<PlayerMovement>().Grounded = false;
+                }
+            }
         }
     }
 
