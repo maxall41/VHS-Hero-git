@@ -19,7 +19,7 @@ public class ClimbCheck : MonoBehaviour
                 {
                     this.gameObject.GetComponentInParent<PlayerMovement>().DoubleJumpCount = 0;
                     this.gameObject.GetComponentInParent<Rigidbody2D>().velocity = vector2;
-                    this.gameObject.GetComponentInParent<Rigidbody2D>().gravityScale = 0;
+                    //this.gameObject.GetComponentInParent<Rigidbody2D>().gravityScale = 0;
                     this.gameObject.GetComponentInParent<PlayerMovement>().Climbing = true;
                     this.gameObject.GetComponentInParent<PlayerMovement>().Grounded = false;
                 }

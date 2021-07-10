@@ -26,6 +26,7 @@ public class Key : MonoBehaviour
             lrh = GameObject.Find("levelman").GetComponent<LevelManager>().keysPicked;
             lrh.Add(gameObject.name);
             Knob.SetActive(true);
+            GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_keyGrab();
             Destroy(gameObject);
         }
     }

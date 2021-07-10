@@ -7,7 +7,6 @@ public class GreaterKey3 : MonoBehaviour
     // Start is called before the first frame update
 
     private bool watchForPickup;
-    EffectOnPick effect = new EffectOnPick();
 
     public GameObject greaterKeyUI;
 
@@ -17,7 +16,6 @@ public class GreaterKey3 : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             GameObject.Find("Player").GetComponent<PlayerDataHolder>().ThirdGreaterKey = true;
-            effect.PickGreaterKey();
             greaterKeyUI.SetActive(true);
             Destroy(gameObject);
 
