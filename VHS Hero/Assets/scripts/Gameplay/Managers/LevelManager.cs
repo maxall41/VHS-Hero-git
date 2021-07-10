@@ -231,7 +231,6 @@ public class LevelManager : MonoBehaviour
 
                 currentLevel++;
                 TimelineMovementEvent();
-                GameObject.Find("Tutorial").GetComponent<TextPlayer>().NextLevel();
 
             }
             nextLevelCooldown = 0.5F;
