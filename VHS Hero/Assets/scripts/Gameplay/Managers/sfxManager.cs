@@ -8,6 +8,7 @@ public class sfxManager : MonoBehaviour
     public AudioSource pullbackSFX;
     public AudioSource jump;
     public AudioSource walk;
+    public AudioSource keyGrab;
 
 
     public void F_timeTravel()
@@ -18,6 +19,11 @@ public class sfxManager : MonoBehaviour
     public void F_pullback()
     {
         pullbackSFX.Play();
+    }
+
+    public void F_keyGrab()
+    {
+        keyGrab.Play();
     }
 
     public void F_jump ()

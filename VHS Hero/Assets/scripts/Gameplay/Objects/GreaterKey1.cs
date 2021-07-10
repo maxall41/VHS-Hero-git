@@ -5,7 +5,6 @@ using UnityEngine;
 public class GreaterKey1 : MonoBehaviour
 {
     private bool watchForPickup;
-    EffectOnPick effect = new EffectOnPick();
 
     public GameObject greaterKeyUI;
 
@@ -14,7 +13,6 @@ public class GreaterKey1 : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             GameObject.Find("Player").GetComponent<PlayerDataHolder>().FirstGreaterKey = true;
-            effect.PickGreaterKey();
             greaterKeyUI.SetActive(true);
             Destroy(gameObject);
 
