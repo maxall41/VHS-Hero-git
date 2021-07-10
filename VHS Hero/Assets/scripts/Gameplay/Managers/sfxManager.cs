@@ -9,11 +9,17 @@ public class sfxManager : MonoBehaviour
     public AudioSource jump;
     public AudioSource walk;
     public AudioSource keyGrab;
+    public AudioSource abilitySFX;
 
 
     public void F_timeTravel()
     {
         timeTravelSFX.Play();
+    }
+
+    public void F_ability()
+    {
+        abilitySFX.Play();
     }
 
     public void F_pullback()
