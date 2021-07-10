@@ -16,6 +16,7 @@ public class PlayerDataHolder : MonoBehaviour
     private bool climbWall = false;
     private bool eternity = false; // player will not be automatically pulled back to current level
 
+
     public bool FirstGreaterKey { get => firstGreaterKey; set => firstGreaterKey = value; }
     public bool SecondGreaterKey { get => secondGreaterKey; set => secondGreaterKey = value; }
     public bool ThirdGreaterKey { get => thirdGreaterKey; set => thirdGreaterKey = value; }

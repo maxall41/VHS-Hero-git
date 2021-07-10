@@ -9,7 +9,7 @@ using Lean.Pool;
 public class LevelManager : MonoBehaviour
 {
     public GameObject[] levels;
-    private int currentLevel = 0;
+    private int currentLevel = 1;
     public int CurrentLevel { get => currentLevel; } // used to inactivate portals in past / future levels.
     private float pullbackTimer;
 
@@ -200,7 +200,7 @@ public class LevelManager : MonoBehaviour
     {
         if (nextLevelCooldown < 0)
         {
-            if (currentLevel > levels.Length - 1)
+            if (currentLevel > levels.Length - 2)
             {
                 GameObject.Find("MusicManager").GetComponent<MusicManager>().GoToCredits(); // Enable credits music
                 SceneManager.LoadScene("credits");
