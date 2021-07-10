@@ -14,7 +14,11 @@ public class MusicManager : MonoBehaviour
 
     public AudioClip creditsMusic;
 
+    public AudioClip menuMusic;
+
     public AudioMixer musicMixer;
+
+
 
     public void GoToGameplay()
     {
@@ -24,6 +28,11 @@ public class MusicManager : MonoBehaviour
     public void GoToCredits()
     {
         StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 0, "credits"));
+    }
+
+    public void GoToMenu()
+    {
+        StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 0, "menu"));
     }
 
 
@@ -51,6 +60,13 @@ public class MusicManager : MonoBehaviour
         if (targetScene == "credits")
         {
             musicSource.clip = creditsMusic;
+            StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 1, "None"));
+            musicSource.Play();
+        }
+
+        if (targetScene == "menu")
+        {
+            musicSource.clip = menuMusic;
             StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 1, "None"));
             musicSource.Play();
         }
