@@ -200,7 +200,7 @@ public class LevelManager : MonoBehaviour
     {
         if (nextLevelCooldown < 0)
         {
-            if (currentLevel > levels.Length - 2)
+            if (currentLevel > levels.Length - 1)
             {
                 GameObject.Find("MusicManager").GetComponent<MusicManager>().GoToCredits(); // Enable credits music
                 SceneManager.LoadScene("credits");
