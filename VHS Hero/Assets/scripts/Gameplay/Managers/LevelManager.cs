@@ -58,13 +58,11 @@ public class LevelManager : MonoBehaviour
 
     public TextMeshProUGUI hintText;
 
-    public List<Vector3> instPos = new List<Vector3>();
-
     public string hint;
 
     private void Start()
     {
-        lastLevel = LeanPool.Spawn(levels[currentLevel], instPos[currentLevel], Quaternion.identity);
+        lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
         currentLevel++;
         playerStartPos = GameObject.Find("Player").transform.position;
 
@@ -106,7 +104,7 @@ public class LevelManager : MonoBehaviour
         StartCoroutine("flicker");
         // Not using LeanPool because it causes issues with respawning objects
         Destroy(lastLevel);
-        lastLevel = Instantiate(levels[currentLevel - 1], instPos[currentLevel - 1], Quaternion.identity);
+        lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
 
 
         GameObject.Find("Player").transform.position = lastDoorPos;
@@ -152,8 +150,25 @@ public class LevelManager : MonoBehaviour
     }
 
 
+
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T) && GameObject.Find("Player").GetComponent<PlayerDataHolder>().Eternity == true)
+        {
+            // Pulls player back to current level
+            // DestroyImmediate(lastLevel);
+            LeanPool.Despawn(lastLevel);
+            lastLevel = LeanPool.Spawn(levels[lastLevelIndex], new Vector3(0, 0, 0), Quaternion.identity);
+            pullbacked = false;
+            GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_pullback();
+
+            Snap(GameObject.Find("Player"));
+
+            InPresent();
+
+            TimelineMovementEvent();
+        }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -171,7 +186,7 @@ public class LevelManager : MonoBehaviour
             // Pulls player back to current level
             // DestroyImmediate(lastLevel);
             LeanPool.Despawn(lastLevel);
-            lastLevel = LeanPool.Spawn(levels[lastLevelIndex], instPos[lastLevelIndex], Quaternion.identity);
+            lastLevel = LeanPool.Spawn(levels[lastLevelIndex], new Vector3(0, 0, 0), Quaternion.identity);
             pullbacked = false;
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_pullback();
 
@@ -222,11 +237,16 @@ public class LevelManager : MonoBehaviour
                 StartCoroutine("Flicker"); // Make screen flicker
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
                 LeanPool.Despawn(lastLevel);
-                lastLevel = LeanPool.Spawn(levels[currentLevel], instPos[currentLevel], Quaternion.identity);
+                lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
                 Debug.Log("Current level: " + currentLevel);
-                if (currentLevel == 2)
+                if (currentLevel == 3)
                 {
-                    GameObject.Find("Keys").GetComponent<Fade>().FadeIn();
+                    GameObject.Find("BackwardsTip").GetComponent<Fade>().FadeIn();
+                }
+
+                else if (currentLevel == 4)
+                {
+                    GameObject.Find("ForwardsTip").GetComponent<Fade>().FadeIn();
                 }
 
                 currentLevel++;
@@ -314,7 +334,9 @@ public class LevelManager : MonoBehaviour
             GameObject b = GameObject.Find(keysPicked[i]);
             if (b != null)
             {
-                Destroy(b);
+                //Destroy(b);
+                b.GetComponent<Key>().enabled = false;
+                b.GetComponent<SpriteRenderer>().enabled = false;
             }
         }
 
@@ -324,6 +346,17 @@ public class LevelManager : MonoBehaviour
             if (ba != null)
             {
                 ba.GetComponent<cup>().F_on();
+            }
+        }
+
+        GameObject[] keys = GameObject.FindGameObjectsWithTag("key");
+
+        foreach (GameObject key in keys)
+        {
+            if (keysPicked.Contains(key.name) == false)
+            {
+                key.GetComponent<Key>().enabled = true;
+                key.GetComponent<SpriteRenderer>().enabled = true;
             }
         }
 
@@ -342,7 +375,7 @@ public class LevelManager : MonoBehaviour
 
             // Weird mess of code
             lastLevelIndex = currentLevel - 1;
-            lastLevel = LeanPool.Spawn(levels[currentLevel - 2],instPos[currentLevel - 2], Quaternion.identity);
+            lastLevel = LeanPool.Spawn(levels[currentLevel - 2], new Vector3(0, 0, 0), Quaternion.identity);
 
 
             // Snap to nearest point
@@ -378,7 +411,7 @@ public class LevelManager : MonoBehaviour
 
             // Weird mess of code
             lastLevelIndex = currentLevel - 1;
-            lastLevel = LeanPool.Spawn(levels[currentLevel], instPos[currentLevel], Quaternion.identity);
+            lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0,0,0), Quaternion.identity);
             // Snap to nearest point
             Snap(GameObject.Find("Player"));
             // Stuff

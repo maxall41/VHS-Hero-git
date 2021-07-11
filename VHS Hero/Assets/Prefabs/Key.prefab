@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5455143063312040697}
   m_Layer: 0
   m_Name: Key
-  m_TagString: Untagged
+  m_TagString: key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4901a5dbe3c34c69b63e984e39c0ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lrh: []
   Knob: {fileID: 0}
 --- !u!61 &5455143063312040697
 BoxCollider2D:

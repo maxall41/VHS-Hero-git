@@ -41,16 +41,14 @@ public class Portal : MonoBehaviour
         Debug.Log(levelDetector.ToString());
         if (levelID != levelDetector.ToString())
         {
-            // Removed because it was causing issues with pooling
-            //this.gameObject.SetActive(false);
             this.gameObject.name = "INACTIVE PORTAL";
-           // this.gameObject.GetComponent<SpriteRenderer>().enabled = false; //Can use this one to hide portal
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = false; //Can use this one to hide portal
             active = false;
         }
         else
         {
             this.gameObject.name = "ACTIVE PORTAL";
-           // this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
             active = true;
         }
     }

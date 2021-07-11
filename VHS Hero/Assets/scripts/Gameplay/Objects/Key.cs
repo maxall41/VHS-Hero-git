@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Lean.Pool;
 
 public class Key : MonoBehaviour
 {
 
     private bool watchForPickup;
 
-    public List<string> lrh = new List<string>();
+    private List<string> lrh = new List<string>();
 
     public GameObject Knob;
 
@@ -27,7 +28,10 @@ public class Key : MonoBehaviour
             lrh.Add(gameObject.name);
             Knob.SetActive(true);
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_keyGrab();
-            Destroy(gameObject);
+
+            // Disable
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            this.enabled = false;
         }
     }
 
