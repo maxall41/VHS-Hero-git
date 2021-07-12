@@ -66,6 +66,12 @@ public class LevelManager : MonoBehaviour
 
     public string hint;
 
+    public GameObject leftIndicator;
+
+    public GameObject rightIndicator;
+
+    public bool portalIndicatorEnabled = true;
+
 
     private void Start()
     {
@@ -172,6 +178,8 @@ public class LevelManager : MonoBehaviour
         nextLevelCooldown -= Time.deltaTime;
         slider.value = cooldownDisplay;
 
+        ShowPortalPositionIndicator();
+
         if (pullbackTimer < 0 && pullbacked == true)
         {
             Pullback();
@@ -204,6 +212,30 @@ public class LevelManager : MonoBehaviour
         InPresent();
 
         TimelineMovementEvent();
+    }
+
+    private void ShowPortalPositionIndicator()
+    {
+        Vector3 diff = GameObject.Find("Player").transform.position - GameObject.FindGameObjectWithTag("portal").transform.position;
+
+        if (portalIndicatorEnabled == true)
+        {
+            if (diff.x > 0)
+            {
+                leftIndicator.GetComponent<Image>().enabled = true;
+                rightIndicator.GetComponent<Image>().enabled = false;
+            }
+            else
+            {
+                leftIndicator.GetComponent<Image>().enabled = false;
+                rightIndicator.GetComponent<Image>().enabled = true;
+            }
+        } else
+        {
+            leftIndicator.GetComponent<Image>().enabled = false;
+            rightIndicator.GetComponent<Image>().enabled = false;
+        }
+
     }
 
     public void NextLevel()
