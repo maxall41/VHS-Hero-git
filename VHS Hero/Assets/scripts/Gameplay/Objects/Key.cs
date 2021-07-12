@@ -13,18 +13,25 @@ public class Key : MonoBehaviour
 
     public GameObject Knob;
 
+    private LevelManager levelman;
+
+    private PlayerDataHolder dataHolder;
+
     private void Start()
     {
         Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
+        levelman = GameObject.Find("levelman").GetComponent<LevelManager>();
+        dataHolder = GameObject.Find("Player").GetComponent<PlayerDataHolder>();
+
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey == false)
+        if (dataHolder.holdingKey == false)
         {
-            GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = true;
-            lrh = GameObject.Find("levelman").GetComponent<LevelManager>().keysPicked;
+            dataHolder.holdingKey = true;
+            lrh = levelman.keysPicked;
             lrh.Add(gameObject.name);
             Knob.SetActive(true);
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_keyGrab();

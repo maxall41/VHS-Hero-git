@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 
     private GameObject lastLevel;
 
-    public GameObject Knob;
+    public GameObject keyUI;
 
     private bool pullbacked;
 
@@ -29,15 +29,11 @@ public class LevelManager : MonoBehaviour
 
     private float timeCooldown;
 
-    private float cooldownDisplay = 3.5F;
-
     public TextMeshProUGUI travelStatusText;
 
     public GameObject flicker;
 
     public GameObject transHolder;
-
-    public bool SnapOn = true;
 
     GameObject closetsObject;
     private float oldDistance = 9999;
@@ -72,12 +68,22 @@ public class LevelManager : MonoBehaviour
 
     public bool portalIndicatorEnabled = true;
 
+    public sfxManager SFXManager;
+
+    public MusicManager musicManager;
+
+    public GameObject player;
+
 
     private void Start()
     {
         lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
         currentLevel++;
-        playerStartPos = GameObject.Find("Player").transform.position;
+        playerStartPos = player.transform.position;
+
+        SFXManager = GameObject.Find("SFX Manager").GetComponent<sfxManager>();
+
+        musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
 
         foreach (GameObject level in levels)
         {
@@ -124,46 +130,13 @@ public class LevelManager : MonoBehaviour
         lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
 
 
-        GameObject.Find("Player").transform.position = lastDoorPos;
+        player.transform.position = lastDoorPos;
            
 
         // Reset saved parameters
-        GameObject.Find("Player").GetComponent<PlayerDataHolder>().holdingKey = false;
+        player.GetComponent<PlayerDataHolder>().holdingKey = false;
 
-        Knob.SetActive(false);
-    }
-
-    private void Snap(GameObject gb)
-    {
-        if (SnapOn == true)
-        {
-            Debug.Log(gb.transform.position);
-            // Snap to nearest point to prevent player falling off map.
-            closetsObject = FindClosestSnap();
-            gb.transform.position = new Vector3(closetsObject.transform.position.x, closetsObject.transform.position.y, 0);
-            //gb.transform.position = new Vector3(gb.transform.position.x, gb.transform.position.y, 0);
-            Debug.Log("Snapped to " + closetsObject.name);
-        }
-    }
-
-    public GameObject FindClosestSnap()
-    {
-        GameObject[] gos;
-        gos = GameObject.FindGameObjectsWithTag("Snap");
-        GameObject closest = null;
-        float distance = Mathf.Infinity;
-        Vector3 position = transform.position;
-        foreach (GameObject go in gos)
-        {
-            Vector3 diff = go.transform.position - GameObject.Find("Player").transform.position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
-            {
-                closest = go;
-                distance = curDistance;
-            }
-        }
-        return closest;
+        keyUI.SetActive(false);
     }
 
 
@@ -174,9 +147,7 @@ public class LevelManager : MonoBehaviour
 
         timeCooldown -= Time.deltaTime;
         pullbackTimer -= Time.deltaTime;
-        cooldownDisplay += Time.deltaTime;
         nextLevelCooldown -= Time.deltaTime;
-        slider.value = cooldownDisplay;
 
         ShowPortalPositionIndicator();
 
@@ -185,29 +156,14 @@ public class LevelManager : MonoBehaviour
             Pullback();
         }
 
-        //if (timeCooldown < 0)
-        //{
-        //    travelStatusText.text = "Enabled";
-        //    travelStatusText.color = new Color32(0, 255, 0, 255);
-        //}
-        //else
-        //{
-        //    travelStatusText.text = "Disabled";
-        //    travelStatusText.color = new Color32(255, 0, 0, 255);
-        //}
-
     }
 
     public void Pullback()
     {
-        // Pulls player back to current level
-        // DestroyImmediate(lastLevel);
         LeanPool.Despawn(lastLevel);
         lastLevel = LeanPool.Spawn(levels[lastLevelIndex], new Vector3(0, 0, 0), Quaternion.identity);
         pullbacked = false;
-        GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_pullback();
-
-        Snap(GameObject.Find("Player"));
+        SFXManager.F_pullback();
 
         InPresent();
 
@@ -216,7 +172,7 @@ public class LevelManager : MonoBehaviour
 
     private void ShowPortalPositionIndicator()
     {
-        Vector3 diff = GameObject.Find("Player").transform.position - GameObject.FindGameObjectWithTag("portal").transform.position;
+        Vector3 diff = player.transform.position - GameObject.FindGameObjectWithTag("portal").transform.position;
 
         if (portalIndicatorEnabled == true)
         {
@@ -244,7 +200,7 @@ public class LevelManager : MonoBehaviour
         {
             if (currentLevel > levels.Length - 2)
             {
-                GameObject.Find("MusicManager").GetComponent<MusicManager>().GoToCredits(); // Enable credits music
+                musicManager.GoToCredits(); // Enable credits music
                 SceneManager.LoadScene("credits");
 
             }
@@ -258,14 +214,11 @@ public class LevelManager : MonoBehaviour
                     Destroy(hint);
                 }
 
-                Debug.Log(currentLevel);
-
-                lastDoorPos = GameObject.Find("Player").transform.position;
+                lastDoorPos = player.transform.position;
                 StartCoroutine(FadeOutOfCurrentLevel());
-                GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
+                SFXManager.F_timeTravel(); // Play time travel sound effect
                 LeanPool.Despawn(lastLevel);
                 lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
-                Debug.Log("Current level: " + currentLevel);
                 if (currentLevel == 3)
                 {
                     GameObject.Find("BackwardsTip").GetComponent<Fade>().FadeIn();
@@ -306,18 +259,6 @@ public class LevelManager : MonoBehaviour
         {
             text.text = text.text.Remove(text.text.Length - 1); ;
             yield return new WaitForSeconds(typingSpeed);
-        }
-    }
-
-    private bool IntToBool(int input)
-    {
-        if (input == 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
         }
     }
 
@@ -378,11 +319,6 @@ public class LevelManager : MonoBehaviour
 
         StartCoroutine(FadeIntoNewLevel());
 
-        //if (volume.profile.TryGet<DepthOfField>(out var df))
-        //{
-        //    df.focusDistance
-        //}
-
 
 
     }
@@ -428,11 +364,6 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         StartCoroutine(FadeIntoNewLevel());
-
-        //if (volume.profile.TryGet<DepthOfField>(out var df))
-        //{
-        //    df.focusDistance
-        //}
     }
 
 
@@ -442,7 +373,6 @@ public class LevelManager : MonoBehaviour
     {
 
         GameObject[] portals = GameObject.FindGameObjectsWithTag("portal");
-        Debug.Log("TME");
 
         foreach (GameObject portal in portals)
         {
@@ -491,10 +421,10 @@ public class LevelManager : MonoBehaviour
             if (timeCooldown < 0 && currentLevel > 1)
             {
                 StartCoroutine(FadeOutOfCurrentLevel());
-                                           //DestroyImmediate(lastLevel);
+   
                 LeanPool.Despawn(lastLevel);
 
-                GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
+                SFXManager.F_timeTravel(); // Play time travel sound effect
 
 
                 // Weird mess of code
@@ -502,19 +432,12 @@ public class LevelManager : MonoBehaviour
                 lastLevel = LeanPool.Spawn(levels[currentLevel - 2], new Vector3(0, 0, 0), Quaternion.identity);
 
 
-                // Snap to nearest point
-                Snap(GameObject.Find("Player"));
-
                 InPast();
 
-                if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().Eternity == false)//Player with ability Eternity will not be pulled back 
-                {
-                    // Stuff
-                    pullbackTimer = pullbackTime;
-                    pullbacked = true;
-                    timeCooldown = 3.5F;
-                    cooldownDisplay = 0;
-                }
+                pullbackTimer = pullbackTime;
+                pullbacked = true;
+                timeCooldown = 3.5F;
+                
                 TimelineMovementEvent();
                 TimeTravel();
             }
@@ -533,28 +456,23 @@ public class LevelManager : MonoBehaviour
                 //DestroyImmediate(lastLevel);
                 LeanPool.Despawn(lastLevel);
 
-                GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
+                SFXManager.F_timeTravel(); // Play time travel sound effect
 
 
                 // Weird mess of code
                 lastLevelIndex = currentLevel - 1;
                 lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
-                // Snap to nearest point
-                Snap(GameObject.Find("Player"));
+
                 // Stuff
 
                 InFuture();
                 TimeTravel();
 
-                if (GameObject.Find("Player").GetComponent<PlayerDataHolder>().Eternity == false)
-                {
-                    pullbackTimer = pullbackTime;
-                    pullbacked = true;
-                    timeCooldown = 3.5F;
-                    cooldownDisplay = 0;
+                pullbackTimer = pullbackTime;
+                pullbacked = true;
+                timeCooldown = 3.5F;
 
-                    TimelineMovementEvent();
-                }
+                TimelineMovementEvent();
 
             }
         }
