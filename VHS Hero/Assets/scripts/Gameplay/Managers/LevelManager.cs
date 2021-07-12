@@ -35,11 +35,6 @@ public class LevelManager : MonoBehaviour
 
     public GameObject transHolder;
 
-    GameObject closetsObject;
-    private float oldDistance = 9999;
-
-    GameObject[] NearGameobjects;
-
     private float nextLevelCooldown; // Fixes issues with timing
 
     public Slider slider;

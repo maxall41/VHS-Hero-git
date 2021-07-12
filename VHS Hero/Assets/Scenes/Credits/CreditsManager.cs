@@ -24,11 +24,6 @@ public class CreditsManager : MonoBehaviour
 
     public CreditsManager next;
 
-
-
-
-    private int offset = 155;
-
     // Start is called before the first frame update
     void Start()
     {

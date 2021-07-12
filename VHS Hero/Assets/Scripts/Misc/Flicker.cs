@@ -17,8 +17,6 @@ public class Flicker : MonoBehaviour
 {
     private new Light2D light;
 
-    private bool lastWasBright = false;
-
     public float min;
 
     public float max;
