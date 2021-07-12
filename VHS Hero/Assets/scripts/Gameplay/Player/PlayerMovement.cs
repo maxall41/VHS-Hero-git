@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour {
 	public InputAction verticalInput;
 
 
+
+
 	float jumpPressRemember;
 	private float jumpTimer=0;
 

@@ -61,7 +61,9 @@ public class LevelManager : MonoBehaviour
 
     public GameObject rightIndicator;
 
-    public bool portalIndicatorEnabled = true;
+    public bool portalIndicatorEnabled;
+
+    public bool usingPortalIndicator;
 
     public sfxManager SFXManager;
 
@@ -169,10 +171,9 @@ public class LevelManager : MonoBehaviour
     {
         if (currentTemporalPosition == TemporalPosition.Present)
         {
-            Vector3 diff = player.transform.position - GameObject.FindGameObjectWithTag("portal").transform.position;
-
-            if (portalIndicatorEnabled == true)
+            if (portalIndicatorEnabled == true && usingPortalIndicator == true)
             {
+                Vector3 diff = player.transform.position - GameObject.FindGameObjectWithTag("portal").transform.position;
                 if (diff.x > 0)
                 {
                     leftIndicator.GetComponent<Image>().enabled = true;
@@ -183,11 +184,6 @@ public class LevelManager : MonoBehaviour
                     leftIndicator.GetComponent<Image>().enabled = false;
                     rightIndicator.GetComponent<Image>().enabled = true;
                 }
-            }
-            else
-            {
-                leftIndicator.GetComponent<Image>().enabled = false;
-                rightIndicator.GetComponent<Image>().enabled = false;
             }
         } else
         {
