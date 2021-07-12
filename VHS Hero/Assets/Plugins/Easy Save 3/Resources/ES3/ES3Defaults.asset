@@ -33,13 +33,11 @@ MonoBehaviour:
     - Assembly-CSharp-firstpass
     - Assembly-CSharp
     - LeanTween
-    - Tayx.Graphy
     - LeanCommon
     - LeanPool
     - Settings
     - LDtkUnity.Editor
     - PsdPlugin
-    - Tayx.Graphy.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

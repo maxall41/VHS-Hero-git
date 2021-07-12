@@ -62,7 +62,7 @@ public class LevelManager : MonoBehaviour
 
     public enum TemporalPosition { Past, Present, Future };
 
-    public TemporalPosition currentTemporalPosition; // Create a Selection object that will be used throughout script
+    public TemporalPosition currentTemporalPosition = TemporalPosition.Present; // Create a Selection object that will be used throughout script
 
     public string hint;
 
