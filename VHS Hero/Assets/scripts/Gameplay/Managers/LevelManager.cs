@@ -66,6 +66,7 @@ public class LevelManager : MonoBehaviour
 
     public string hint;
 
+
     private void Start()
     {
         lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
@@ -111,7 +112,7 @@ public class LevelManager : MonoBehaviour
     {
         keysPicked.Clear();
         buttonsActivated.Clear();
-        StartCoroutine("flicker");
+        StartCoroutine(FadeOutOfCurrentLevel());
         // Not using LeanPool because it causes issues with respawning objects
         Destroy(lastLevel);
         lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
@@ -228,7 +229,7 @@ public class LevelManager : MonoBehaviour
                 Debug.Log(currentLevel);
 
                 lastDoorPos = GameObject.Find("Player").transform.position;
-                StartCoroutine("Flicker"); // Make screen flicker
+                StartCoroutine(FadeOutOfCurrentLevel());
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
                 LeanPool.Despawn(lastLevel);
                 lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
@@ -288,28 +289,122 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    IEnumerator Flicker()
+    IEnumerator FadeOutOfCurrentLevel()
     {
-        if (IntToBool(PlayerPrefs.GetInt("DisableFlashing")) == false)
+        float duration = 0.65F; // duration of transition
+        float targetValueCA = 1; // Target for transition (FADE IN)
+        float targetValueBlur = 0.8F; // Target for transition (FADE IN)
+        //if (IntToBool(PlayerPrefs.GetInt("DisableFlashing")) == false)
+        //{
+        //    flicker.SetActive(true);
+        //    yield return new WaitForSeconds(0.09F);
+        //    flicker.SetActive(false);
+        //    yield return new WaitForSeconds(0.04F);
+        //    flicker.SetActive(true);
+        //    yield return new WaitForSeconds(0.02F);
+        //    flicker.SetActive(false);
+        //    yield return new WaitForSeconds(0.05F);
+        //    flicker.SetActive(true);
+        //    yield return new WaitForSeconds(0.03F);
+        //    flicker.SetActive(false);
+        //    yield return new WaitForSeconds(0.06F);
+        //    flicker.SetActive(true);
+        //    yield return new WaitForSeconds(0.07F);
+        //    flicker.SetActive(false);
+        //}
+
+        float currentTime = 0;
+        ClampedFloatParameter currentValCA = new ClampedFloatParameter(0, 0, 1, false);
+        MinFloatParameter currentValBlur = new MinFloatParameter(0, 0);
+        var volume = GameObject.Find("transitionEffect").GetComponent<Volume>();
+        if (volume.profile.TryGet<ChromaticAberration>(out var ca) == false)
         {
-            flicker.SetActive(true);
-            yield return new WaitForSeconds(0.09F);
-            flicker.SetActive(false);
-            yield return new WaitForSeconds(0.04F);
-            flicker.SetActive(true);
-            yield return new WaitForSeconds(0.02F);
-            flicker.SetActive(false);
-            yield return new WaitForSeconds(0.05F);
-            flicker.SetActive(true);
-            yield return new WaitForSeconds(0.03F);
-            flicker.SetActive(false);
-            yield return new WaitForSeconds(0.06F);
-            flicker.SetActive(true);
-            yield return new WaitForSeconds(0.07F);
-            flicker.SetActive(false);
+            Debug.LogError("Issue getting pp effect (ChromaticAbberation)");
         }
 
+        if (volume.profile.TryGet<DepthOfField>(out var blur) == false)
+        {
+            Debug.LogError("Issue getting pp effect (BLUR)");
+        }
+
+        currentValCA = ca.intensity;
+        currentValBlur = blur.focusDistance;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            float newValCA = Mathf.Lerp(currentValCA.value, targetValueCA, currentTime / duration);
+            ca.intensity.overrideState = true;
+            ca.intensity.Override(newValCA);
+
+            float newValBlur = Mathf.Lerp(currentValBlur.value, targetValueBlur, currentTime / duration);
+            blur.focusDistance.overrideState = true;
+            blur.focusDistance.Override(newValBlur);
+
+            yield return null;
+        }
+
+        StartCoroutine(FadeIntoNewLevel());
+
+        //if (volume.profile.TryGet<DepthOfField>(out var df))
+        //{
+        //    df.focusDistance
+        //}
+
+
+
     }
+
+    IEnumerator FadeIntoNewLevel() {
+
+        float duration = 0.65F; // duration of transition
+        float targetValueCA = 0; // Target for transition (FADE OUT)
+        float targetValueBlur = 3; // Target for transition (FADE OUT)
+
+
+        float currentTime = 0;
+        ClampedFloatParameter currentValCA = new ClampedFloatParameter(0, 0, 1, false);
+        MinFloatParameter currentValBlur = new MinFloatParameter(0, 0);
+        var volume = GameObject.Find("transitionEffect").GetComponent<Volume>();
+        if (volume.profile.TryGet<ChromaticAberration>(out var ca) == false)
+        {
+            Debug.LogError("Issue getting pp effect (ChromaticAbberation)");
+        }
+
+        if (volume.profile.TryGet<DepthOfField>(out var blur) == false)
+        {
+            Debug.LogError("Issue getting pp effect (BLUR)");
+        }
+
+        currentValCA = ca.intensity;
+        currentValBlur = blur.focusDistance;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            float newValCA = Mathf.Lerp(currentValCA.value, targetValueCA, currentTime / duration);
+            ca.intensity.overrideState = true;
+            ca.intensity.Override(newValCA);
+
+            float newValBlur = Mathf.Lerp(currentValBlur.value, targetValueBlur, currentTime / duration);
+            blur.focusDistance.overrideState = true;
+            blur.focusDistance.Override(newValBlur);
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1);
+
+        StartCoroutine(FadeIntoNewLevel());
+
+        //if (volume.profile.TryGet<DepthOfField>(out var df))
+        //{
+        //    df.focusDistance
+        //}
+    }
+
+
+
 
     private void TimelineMovementEvent()
     {
@@ -364,7 +459,7 @@ public class LevelManager : MonoBehaviour
         {
             if (timeCooldown < 0 && currentLevel > 1)
             {
-                StartCoroutine("Flicker"); // Make screen flicker
+                StartCoroutine(FadeOutOfCurrentLevel());
                                            //DestroyImmediate(lastLevel);
                 LeanPool.Despawn(lastLevel);
 
@@ -403,8 +498,8 @@ public class LevelManager : MonoBehaviour
         {
             if (timeCooldown < 0 && currentLevel < levels.Length)
             {
-                StartCoroutine("Flicker"); // Make screen flicker
-                                           //DestroyImmediate(lastLevel);
+                StartCoroutine(FadeOutOfCurrentLevel());
+                //DestroyImmediate(lastLevel);
                 LeanPool.Despawn(lastLevel);
 
                 GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_timeTravel(); // Play time travel sound effect
