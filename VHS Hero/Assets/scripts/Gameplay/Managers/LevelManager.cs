@@ -449,7 +449,6 @@ public class LevelManager : MonoBehaviour
             portal.GetComponent<Portal>().TimelineMovementEvent();
         }
 
-        GameObject.Find("AQM").GetComponent<AudioQueue>().queuedPlayers.Clear(); // Remove queued players to prevent incorrect count
         for (int i = 0; i < keysPicked.Count; i++)
         {
             GameObject b = GameObject.Find(keysPicked[i]);
