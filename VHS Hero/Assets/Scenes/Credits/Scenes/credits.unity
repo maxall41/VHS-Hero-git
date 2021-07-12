@@ -9937,7 +9937,7 @@ MonoBehaviour:
   title: {fileID: 862527515}
   titleText: 'Music by:'
   people:
-  - Damarus #1191
+  - '@Seapruittmusic'
   peopleSlots:
   - {fileID: 1558310884381546148}
   catalyst: 0
@@ -9987,7 +9987,7 @@ MonoBehaviour:
   title: {fileID: 862527515}
   titleText: 'Levels Designed by:'
   people:
-  - IanX#7979
+  - '@IanX'
   peopleSlots:
   - {fileID: 1558310884381546148}
   catalyst: 0
