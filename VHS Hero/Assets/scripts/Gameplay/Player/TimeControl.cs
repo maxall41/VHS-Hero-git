@@ -8,10 +8,12 @@ public class TimeControl : MonoBehaviour
     private float timeHeld2;
     private float timeHeld3;
     public float pullBackAfterSeconds;
+
+    private LevelManager levelman;
     // Start is called before the first frame update
     void Start()
     {
-        
+        levelman = GameObject.Find("levelman").GetComponent<LevelManager>();
     }
 
     // Update is called once per frame
@@ -25,9 +27,14 @@ public class TimeControl : MonoBehaviour
             timeHeld = 0;
         }
 
-        if (timeHeld > 1)
-        {
-            GameObject.Find("levelman").GetComponent<LevelManager>().NextLevelPullback(pullBackAfterSeconds);
+        if (timeHeld > 0.3F) {
+            if (levelman.currentTemporalPosition == LevelManager.TemporalPosition.Present)
+            {
+                levelman.GetComponent<LevelManager>().NextLevelPullback(pullBackAfterSeconds);
+            } else if (levelman.currentTemporalPosition == LevelManager.TemporalPosition.Past)
+            {
+                levelman.Pullback();
+            }
         }
 
         if (Input.GetKey(KeyCode.B))
@@ -39,9 +46,16 @@ public class TimeControl : MonoBehaviour
             timeHeld2 = 0;
         }
 
-        if (timeHeld2 > 1)
+        if (timeHeld2 > 0.3F)
         {
-            GameObject.Find("levelman").GetComponent<LevelManager>().LastLevelPullback(pullBackAfterSeconds);
+            if (levelman.currentTemporalPosition == LevelManager.TemporalPosition.Present)
+            {
+                levelman.GetComponent<LevelManager>().LastLevelPullback(pullBackAfterSeconds);
+            }
+            else if (levelman.currentTemporalPosition == LevelManager.TemporalPosition.Future)
+            {
+                levelman.Pullback();
+            }
         }
 
 
@@ -55,9 +69,9 @@ public class TimeControl : MonoBehaviour
             timeHeld3 = 0;
         }
 
-        if (timeHeld3 > 1)
+        if (timeHeld3 > 0.3F)
         {
-            GameObject.Find("levelman").GetComponent<LevelManager>().Restart();
+            levelman.GetComponent<LevelManager>().Restart();
         }
 
     }

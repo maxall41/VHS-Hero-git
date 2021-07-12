@@ -16,7 +16,7 @@ public class MenuManager : MonoBehaviour
         //loadingScreen.SetActive(true);
         //StartCoroutine(StartFade(musicMixer, "MusicVol", 1, 0,"main"));
         GameObject.Find("MusicManager").GetComponent<MusicManager>().GoToGameplay();
-        scenesLoading.Add(SceneManager.LoadSceneAsync("main"));
+        SceneManager.LoadScene("main");
     }
 
     public void Settings()

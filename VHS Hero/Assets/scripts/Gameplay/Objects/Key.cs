@@ -31,6 +31,7 @@ public class Key : MonoBehaviour
 
             // Disable
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
             this.enabled = false;
         }
     }
