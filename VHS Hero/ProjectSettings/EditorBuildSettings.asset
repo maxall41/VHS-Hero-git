@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/completeAllKeys.unity
     guid: 86b5ad081af8e46518aba900492c9ba0
+  - enabled: 1
+    path: Assets/Scenes/completeHidden.unity
+    guid: 472c3ea0efcfc8649988ddab6919c5cc
   m_configObjects: {}

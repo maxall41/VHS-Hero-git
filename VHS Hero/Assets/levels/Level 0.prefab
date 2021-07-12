@@ -374,6 +374,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4686972421950909305}
   - component: {fileID: 4686972421950909306}
+  - component: {fileID: 6223874002100794328}
+  - component: {fileID: 9068359654698119086}
   m_Layer: 0
   m_Name: The Gate
   m_TagString: Untagged
@@ -446,6 +448,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6223874002100794328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686972421950909304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e385ede84fee740be8a91d804e82f917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &9068359654698119086
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686972421950909304}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.12531805, y: 0.15316558}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 6.4, y: 6.4}
+    newSize: {x: 6.4, y: 6.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.870881, y: 6.0936685}
+  m_EdgeRadius: 0
 --- !u!1 &4686972422809789152
 GameObject:
   m_ObjectHideFlags: 0

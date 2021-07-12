@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using Lean.Pool;
 
 public class LevelManager : MonoBehaviour
@@ -94,6 +96,7 @@ public class LevelManager : MonoBehaviour
         Future.SetActive(false);
         Past.SetActive(true);
         currentTemporalPosition = TemporalPosition.Past;
+
     }
 
     private void InPresent()
