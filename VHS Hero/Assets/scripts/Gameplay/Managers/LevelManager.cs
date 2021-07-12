@@ -167,19 +167,27 @@ public class LevelManager : MonoBehaviour
 
     private void ShowPortalPositionIndicator()
     {
-        Vector3 diff = player.transform.position - GameObject.FindGameObjectWithTag("portal").transform.position;
-
-        if (portalIndicatorEnabled == true)
+        if (currentTemporalPosition == TemporalPosition.Present)
         {
-            if (diff.x > 0)
+            Vector3 diff = player.transform.position - GameObject.FindGameObjectWithTag("portal").transform.position;
+
+            if (portalIndicatorEnabled == true)
             {
-                leftIndicator.GetComponent<Image>().enabled = true;
-                rightIndicator.GetComponent<Image>().enabled = false;
+                if (diff.x > 0)
+                {
+                    leftIndicator.GetComponent<Image>().enabled = true;
+                    rightIndicator.GetComponent<Image>().enabled = false;
+                }
+                else
+                {
+                    leftIndicator.GetComponent<Image>().enabled = false;
+                    rightIndicator.GetComponent<Image>().enabled = true;
+                }
             }
             else
             {
                 leftIndicator.GetComponent<Image>().enabled = false;
-                rightIndicator.GetComponent<Image>().enabled = true;
+                rightIndicator.GetComponent<Image>().enabled = false;
             }
         } else
         {

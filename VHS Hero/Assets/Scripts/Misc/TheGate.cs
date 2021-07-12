@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 public class TheGate : MonoBehaviour
 {
     private bool WatchForE = false;
+    public InputAction continueInput;
+
     void OnTriggerExit2D(Collider2D other)
     {
         WatchForE = true;
@@ -15,9 +18,19 @@ public class TheGate : MonoBehaviour
         WatchForE = true;
     }
 
+    private void OnEnable()
+    {
+        continueInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        continueInput.Disable();
+    }
+
     private void Update()
     {
-        if (WatchForE == true && Input.GetKeyDown(KeyCode.E))
+        if (WatchForE == true && continueInput.triggered)
         {
             if (PlayerPrefs.GetInt("Nigredo") == 1 && PlayerPrefs.GetInt("Albedo") == 1 && PlayerPrefs.GetInt("Citrinitas") == 1)
             {

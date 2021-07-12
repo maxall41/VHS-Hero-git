@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -10,27 +11,51 @@ public class PlayerMovement : MonoBehaviour {
 	float horizontalMove = 0f;
 	float verticalMove = 0f;
 
-	
+	public InputAction horizontalMoveInput;
+
+	public InputAction jumpInput;
+
+	public InputAction verticalInput;
+
+
 	float jumpPressRemember;
 	private float jumpTimer=0;
 
 	public AudioSource walkSFX;
 
 	public Animator animator;
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnEnable()
+    {
+		horizontalMoveInput.Enable();
+		jumpInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+		horizontalMoveInput.Disable();
+		jumpInput.Disable();
+    }
+
+    // Update is called once per frame
+    void Update () {
 
 		jumpPressRemember -= Time.deltaTime;
 		groundTimer -= Time.deltaTime;
 
-		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-		verticalMove= Input.GetAxisRaw("Vertical") * climbSpeed;
+		horizontalMove = horizontalMoveInput.ReadValue<float>() * runSpeed;
 
-		if (Input.GetButtonDown("Jump"))
-		{
+		verticalMove = verticalInput.ReadValue<float>() * climbSpeed;
+
+		if (jumpInput.triggered == true)
+        {
 			jumpPressRemember = 0.25F;
 		}
+
+		//if (Input.GetButtonDown("Jump"))
+		//{
+		//	jumpPressRemember = 0.25F;
+		//}
 
 	}
 

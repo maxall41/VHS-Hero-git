@@ -641,7 +641,7 @@ PlayerSettings:
     Analytics: 0
     Build: 0
     Collab: 0
-    Game Performance: 0
+    Game Performance: 1
     Purchasing: 0
     UDP: 0
     Unity Ads: 0
@@ -657,7 +657,7 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 0
+  activeInputHandler: 1
   cloudProjectId: c488fe26-567e-4706-b23e-9bc7d94f7bf9
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []

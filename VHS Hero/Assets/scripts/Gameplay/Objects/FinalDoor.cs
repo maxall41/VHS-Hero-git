@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 public class FinalDoor : MonoBehaviour
 {
 
@@ -15,6 +16,20 @@ public class FinalDoor : MonoBehaviour
     private bool active = true;
 
     private PlayerDataHolder playerDataHolder;
+
+    public InputAction continueInput;
+
+    private void OnEnable()
+    {
+        continueInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        continueInput.Disable();
+    }
+
+
 
 
     private void Start()
@@ -39,7 +54,7 @@ public class FinalDoor : MonoBehaviour
     {
         if (watchForE == true)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (continueInput.triggered)
             {
                 if (active == true)
                 {

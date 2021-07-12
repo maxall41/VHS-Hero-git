@@ -460,6 +460,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e385ede84fee740be8a91d804e82f917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  continueInput:
+    m_Name: Continue Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 92f6bda9-e37a-4bc1-b91b-a9f9ac241634
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 4b7a2a93-50a5-4a5d-baff-34e1704f4600
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Continue Input
+      m_Flags: 0
 --- !u!61 &9068359654698119086
 BoxCollider2D:
   m_ObjectHideFlags: 0

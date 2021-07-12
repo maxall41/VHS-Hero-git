@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TimeControl : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class TimeControl : MonoBehaviour
     private float timeHeld3;
     public float pullBackAfterSeconds;
 
+    public InputAction forwards;
+
+    public InputAction backwards;
+
+    public InputAction restart;
+
     private LevelManager levelman;
     // Start is called before the first frame update
     void Start()
@@ -16,37 +23,36 @@ public class TimeControl : MonoBehaviour
         levelman = GameObject.Find("levelman").GetComponent<LevelManager>();
     }
 
+    private void OnEnable()
+    {
+        forwards.Enable();
+        backwards.Enable();
+        restart.Enable();
+    }
+
+    private void OnDisable()
+    {
+        forwards.Disable();
+        backwards.Disable();
+        restart.Disable();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.F))
+        if (forwards.triggered)
         {
-            timeHeld += Time.deltaTime;
-        } else
-        {
-            timeHeld = 0;
-        }
-
-        if (timeHeld > 0.3F) {
             if (levelman.currentTemporalPosition == LevelManager.TemporalPosition.Present)
             {
                 levelman.GetComponent<LevelManager>().NextLevelPullback(pullBackAfterSeconds);
-            } else if (levelman.currentTemporalPosition == LevelManager.TemporalPosition.Past)
+            }
+            else if (levelman.currentTemporalPosition == LevelManager.TemporalPosition.Past)
             {
                 levelman.Pullback();
             }
         }
 
-        if (Input.GetKey(KeyCode.B))
-        {
-            timeHeld2 += Time.deltaTime;
-        }
-        else
-        {
-            timeHeld2 = 0;
-        }
-
-        if (timeHeld2 > 0.3F)
+        if (backwards.triggered)
         {
             if (levelman.currentTemporalPosition == LevelManager.TemporalPosition.Present)
             {
@@ -58,18 +64,7 @@ public class TimeControl : MonoBehaviour
             }
         }
 
-
-        //explode!
-        if (Input.GetKey(KeyCode.R))
-        {
-            timeHeld3 += Time.deltaTime;
-        }
-        else
-        {
-            timeHeld3 = 0;
-        }
-
-        if (timeHeld3 > 0.3F)
+        if (restart.triggered)
         {
             levelman.GetComponent<LevelManager>().Restart();
         }

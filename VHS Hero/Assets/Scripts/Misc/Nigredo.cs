@@ -7,5 +7,6 @@ public class Nigredo : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         PlayerPrefs.SetInt("Nigredo", 1);
+        Destroy(gameObject);
     }
 }
