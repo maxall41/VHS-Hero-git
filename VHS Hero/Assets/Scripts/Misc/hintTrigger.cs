@@ -38,11 +38,11 @@ public class hintTrigger : MonoBehaviour
             text.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
-        yield return new WaitForSeconds(1.5F);
-        foreach (char letter in text.text.ToCharArray())
-        {
-            text.text = text.text.Remove(text.text.Length - 1); ;
-            yield return new WaitForSeconds(typingSpeed);
-        }
+        //yield return new WaitForSeconds(1.5F);
+        //foreach (char letter in text.text.ToCharArray())
+        //{
+        //    text.text = text.text.Remove(text.text.Length - 1); ;
+        //    yield return new WaitForSeconds(typingSpeed);
+        //}
     }
 }

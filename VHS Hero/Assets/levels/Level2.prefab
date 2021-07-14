@@ -130,7 +130,7 @@ MonoBehaviour:
   - {x: 12.00003, y: -8, z: 0}
   m_ShapePathHash: 2045484
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265430
+  m_InstanceId: 46664
 --- !u!1 &1274641779496722585
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +259,7 @@ MonoBehaviour:
   - {x: -15.999971, y: -5, z: 0}
   m_ShapePathHash: 2040838
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265516
+  m_InstanceId: 46750
 --- !u!1 &3562248219880009814
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +518,7 @@ MonoBehaviour:
   - {x: -14.999971, y: -8, z: 0}
   m_ShapePathHash: 7637421
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265446
+  m_InstanceId: 46680
 --- !u!1 &5485276709579615584
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,7 +858,7 @@ MonoBehaviour:
   - {x: 11.00003, y: -12, z: 0}
   m_ShapePathHash: 2261965
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265420
+  m_InstanceId: 46654
 --- !u!1 &7287664602972271874
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,7 +989,7 @@ MonoBehaviour:
   - {x: 13.00003, y: -12, z: 0}
   m_ShapePathHash: 6289917
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265386
+  m_InstanceId: 46620
 --- !u!1 &7651939421049853163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,7 +1118,7 @@ MonoBehaviour:
   - {x: 9.00003, y: -19, z: 0}
   m_ShapePathHash: 172679
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265412
+  m_InstanceId: 46646
 --- !u!1 &7996477464789311762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,7 +1217,7 @@ MonoBehaviour:
   - {x: 14.000029, y: -9, z: 0}
   m_ShapePathHash: 5485076
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265454
+  m_InstanceId: 46688
 --- !u!1 &8447175066328053770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,7 +1316,7 @@ MonoBehaviour:
   - {x: 10.00003, y: -14, z: 0}
   m_ShapePathHash: 8378573
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265382
+  m_InstanceId: 46616
 --- !u!1 &8469887590068765252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2121,8 +2121,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: afe280312a10a47869a0a3d38a687bc0, type: 2}
-  m_sharedMaterial: {fileID: 6624115323307236839, guid: afe280312a10a47869a0a3d38a687bc0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 08eab2465bef14cc7b7945cf1ba3001f, type: 2}
+  m_sharedMaterial: {fileID: 3062030855824425408, guid: 08eab2465bef14cc7b7945cf1ba3001f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2130,13 +2130,13 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+    bottomLeft: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+    bottomRight: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -2286,7 +2286,7 @@ MonoBehaviour:
   - {x: 9.00003, y: -16, z: 0}
   m_ShapePathHash: 9655076
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265470
+  m_InstanceId: 46704
 --- !u!1001 &109282500715717588
 PrefabInstance:
   m_ObjectHideFlags: 0

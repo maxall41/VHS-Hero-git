@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour
 
     public enum TemporalPosition { Past, Present, Future };
 
-    public TemporalPosition currentTemporalPosition = TemporalPosition.Present; // Create a Selection object that will be used throughout script
+    public TemporalPosition currentTemporalPosition = TemporalPosition.Present;
 
     public string hint;
 
@@ -71,12 +71,16 @@ public class LevelManager : MonoBehaviour
 
     public GameObject player;
 
+    private float pullbackTimeG;
+
 
     private void Start()
     {
         lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
         currentLevel++;
         playerStartPos = player.transform.position;
+
+        GameObject.Find("RestartTip").GetComponent<Fade>().FadeIn();
 
         SFXManager = GameObject.Find("SFX Manager").GetComponent<sfxManager>();
 
@@ -94,26 +98,26 @@ public class LevelManager : MonoBehaviour
 
     private void InFuture()
     {
-        Present.SetActive(false);
-        Past.SetActive(false);
-        Future.SetActive(true);
+        Future.GetComponent<Volume>().weight = 1;
+        Past.GetComponent<Volume>().weight = 0;
+        Present.GetComponent<Volume>().weight = 0;
         currentTemporalPosition = TemporalPosition.Future;
     }
 
     private void InPast()
     {
-        Present.SetActive(false);
-        Future.SetActive(false);
-        Past.SetActive(true);
+        Future.GetComponent<Volume>().weight = 0;
+        Past.GetComponent<Volume>().weight = 1;
+        Present.GetComponent<Volume>().weight = 0;
         currentTemporalPosition = TemporalPosition.Past;
 
     }
 
     private void InPresent()
     {
-        Future.SetActive(false);
-        Past.SetActive(false);
-        Present.SetActive(true);
+        Future.GetComponent<Volume>().weight = 0;
+        Past.GetComponent<Volume>().weight = 0;
+        Present.GetComponent<Volume>().weight = 1;
         currentTemporalPosition = TemporalPosition.Present;
     }
 
@@ -151,6 +155,13 @@ public class LevelManager : MonoBehaviour
         if (pullbackTimer < 0 && pullbacked == true)
         {
             Pullback();
+        }
+
+        if (pullbackTimer > 0)
+        {
+            Present.GetComponent<Volume>().weight += (Time.deltaTime / pullbackTimeG);
+            Past.GetComponent<Volume>().weight -= (Time.deltaTime / pullbackTimeG);
+            Future.GetComponent<Volume>().weight -= (Time.deltaTime / pullbackTimeG);
         }
 
     }
@@ -436,6 +447,7 @@ public class LevelManager : MonoBehaviour
                 pullbackTimer = pullbackTime;
                 pullbacked = true;
                 timeCooldown = 3.5F;
+                pullbackTimeG = pullbackTime;
                 
                 TimelineMovementEvent();
                 TimeTravel();
@@ -470,6 +482,7 @@ public class LevelManager : MonoBehaviour
                 pullbackTimer = pullbackTime;
                 pullbacked = true;
                 timeCooldown = 3.5F;
+                pullbackTimeG = pullbackTime;
 
                 TimelineMovementEvent();
 
