@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 public class hintTrigger : MonoBehaviour
 {
-    public string hint;
+    //public string hint;
 
     public TextMeshProUGUI hintText;
 
@@ -13,6 +13,8 @@ public class hintTrigger : MonoBehaviour
     public List<string> load = new List<string>();
 
     public List<string> empty = new List<string>();
+
+    public HintsReference hint;
 
     private void Start()
     {
@@ -27,7 +29,7 @@ public class hintTrigger : MonoBehaviour
         if (PlayerPrefs.GetInt(id) != 0 && collision.gameObject.name == "Player")
         {
             PlayerPrefs.SetInt(id, 0);
-            StartCoroutine(Type(hintText, hint, 0.02F));
+            StartCoroutine(Type(hintText, hint.hints[id], 0.02F));
         }
     }
 

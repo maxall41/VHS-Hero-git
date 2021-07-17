@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour {
 
 
 	float jumpPressRemember;
-	private float jumpTimer=0;
 
 	public AudioSource walkSFX;
 
@@ -78,7 +77,6 @@ public class PlayerMovement : MonoBehaviour {
 	public bool Climbing { get => climbing; set => climbing = value; }
     public int DoubleJumpCount { get => doubleJumpCount; set => doubleJumpCount = value; }
     public bool Grounded { get => m_Grounded; set => m_Grounded = value; }
-    public float JumpTimer { get => jumpTimer; set => jumpTimer = value; }
 
     private float groundTimer;
 	private int doubleJumpCount = 0;
@@ -93,15 +91,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		// Gravity
-		//transform.position = new Vector3(transform.position.x, transform.position.y - gravityScale * Time.deltaTime, transform.position.z);
-		// Other stuff
 		Grounded = false;
-		if (JumpTimer >= 0)
-		{
-			JumpTimer -= Time.fixedDeltaTime;
-
-		}
 
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -188,11 +178,10 @@ public class PlayerMovement : MonoBehaviour {
 				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 				groundTimer = 0;
 				jumpPressRemember = 0;
-				jumpTimer = 0.25f;
 			}
 
 			//double jump
-			else if ((DoubleJumpCount < 1) && this.gameObject.GetComponent<PlayerDataHolder>().DoubleJump&&JumpTimer<=0){
+			else if ((DoubleJumpCount < 1) && this.gameObject.GetComponent<PlayerDataHolder>().hasDoubleJump ){
 
 				GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_jump(); // Play jump sound effect
 																					// Add a vertical force to the player.
@@ -217,9 +206,6 @@ public class PlayerMovement : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
-
-		// DeFlip hint text
-		GameObject.Find("playerHintText").GetComponent<DeFlip>().DeFlip_F();
 	}
 
     private void OnDrawGizmos()
@@ -250,7 +236,6 @@ public class PlayerMovement : MonoBehaviour {
 			}
 			groundTimer = 0;
 			jumpPressRemember = 0;
-			jumpTimer = 0.25f;
 
 
 		}

@@ -232,7 +232,7 @@ MonoBehaviour:
   - {x: -14.999971, y: -8, z: 0}
   m_ShapePathHash: 450093
   m_Mesh: {fileID: 0}
-  m_InstanceId: 50002
+  m_InstanceId: 45644
 --- !u!1 &1853590456490634011
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,7 +411,7 @@ MonoBehaviour:
   - {x: 9.00003, y: -8, z: 0}
   m_ShapePathHash: 3545593
   m_Mesh: {fileID: 0}
-  m_InstanceId: 50008
+  m_InstanceId: 45650
 --- !u!1 &5486909512315880007
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   - {x: -15.999971, y: -5, z: 0}
   m_ShapePathHash: 1591744
   m_Mesh: {fileID: 0}
-  m_InstanceId: 49994
+  m_InstanceId: 45636
 --- !u!1 &6265375255002003296
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,11 +556,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95f0302ff5d043a496657c3b6f85105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hint: I have been longing for that
   hintText: {fileID: 7713712034043099152}
   id: keyHint
   load: []
   empty: []
+  hint: {fileID: 11400000, guid: 8179a6512eb8e449884854da3d1562b8, type: 2}
 --- !u!61 &4166013655202850816
 BoxCollider2D:
   m_ObjectHideFlags: 0

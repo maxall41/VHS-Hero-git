@@ -12,7 +12,7 @@ public class AbilityJump : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            GameObject.Find("Player").GetComponent<PlayerDataHolder>().DoubleJump = true;
+            GameObject.Find("Player").GetComponent<PlayerDataHolder>().hasDoubleJump = true;
             GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_ability();
             Destroy(gameObject);
 

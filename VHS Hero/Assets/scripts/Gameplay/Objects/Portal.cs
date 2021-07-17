@@ -20,21 +20,10 @@ public class Portal : MonoBehaviour
     private void Start()
     {
         
-        keyUI = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
+        keyUI = GameObject.Find("RefHolder").GetComponent<RefHolder>().keyUI;
         levelman = GameObject.Find("levelman").GetComponent<LevelManager>();
         dataHolder = GameObject.Find("Player").GetComponent<PlayerDataHolder>();
 
-    }
-
-    void OnBecameVisible()
-    {
-
-        levelman.portalIndicatorEnabled = false;
-    }
-
-    void OnBecameInvisible()
-    {
-        levelman.portalIndicatorEnabled = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,19 +40,16 @@ public class Portal : MonoBehaviour
     {
         // Deactivate portals in past/future levels
         int levelDetector = GameObject.Find("levelman").GetComponent<LevelManager>().CurrentLevel;
-        Debug.Log("test -AB: ");
-        Debug.Log(levelID);
-        Debug.Log(levelDetector.ToString());
         if (levelID != levelDetector.ToString())
         {
-            this.gameObject.name = "INACTIVE PORTAL";
-            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.name = "INACTIVE PORTAL";
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
             active = false;
         }
         else
         {
-            this.gameObject.name = "ACTIVE PORTAL";
-            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            gameObject.name = "ACTIVE PORTAL";
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
             active = true;
         }
     }

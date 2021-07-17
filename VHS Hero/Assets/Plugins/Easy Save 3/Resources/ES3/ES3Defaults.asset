@@ -36,8 +36,10 @@ MonoBehaviour:
     - LeanCommon
     - LeanPool
     - Settings
+    - Beetlecircus.SerializableDictionary
     - LDtkUnity.Editor
     - PsdPlugin
+    - Beetlecircus.SerializableDictionary.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

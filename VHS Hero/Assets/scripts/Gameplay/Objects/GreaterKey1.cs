@@ -12,7 +12,7 @@ public class GreaterKey1 : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            GameObject.Find("Player").GetComponent<PlayerDataHolder>().FirstGreaterKey = true;
+            GameObject.Find("Player").GetComponent<PlayerDataHolder>().hasFirstGreaterKey = true;
             greaterKeyUI.SetActive(true);
             Destroy(gameObject);
 

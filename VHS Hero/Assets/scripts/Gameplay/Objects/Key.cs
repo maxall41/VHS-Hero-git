@@ -19,7 +19,7 @@ public class Key : MonoBehaviour
 
     private void Start()
     {
-        Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
+        Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().keyUI;
         levelman = GameObject.Find("levelman").GetComponent<LevelManager>();
         dataHolder = GameObject.Find("Player").GetComponent<PlayerDataHolder>();
 

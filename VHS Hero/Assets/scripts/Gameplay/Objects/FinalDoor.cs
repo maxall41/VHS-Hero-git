@@ -35,7 +35,7 @@ public class FinalDoor : MonoBehaviour
     private void Start()
     {
 
-        Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
+        Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().keyUI;
         playerDataHolder = GameObject.Find("Player").GetComponent<PlayerDataHolder>();
     }
 
@@ -52,17 +52,18 @@ public class FinalDoor : MonoBehaviour
 
     private void Update()
     {
+        //TODO: Replace with less horible logic tree:
         if (watchForE == true)
         {
             if (continueInput.triggered)
             {
                 if (active == true)
                 {
-                    if (playerDataHolder.FirstGreaterKey == true)
+                    if (playerDataHolder.hasFirstGreaterKey == true)
                     {
-                        if (playerDataHolder.SecondGreaterKey == true)
+                        if (playerDataHolder.hasSecondGreaterKey == true)
                         {
-                            if (playerDataHolder.ThirdGreaterKey == true)
+                            if (playerDataHolder.hasThirdGreaterKey == true)
                             {
                                 SceneManager.LoadScene("completeAllKeys");
                                 PlayerPrefs.SetInt("Rubedo", 1);
@@ -97,8 +98,6 @@ public class FinalDoor : MonoBehaviour
         Debug.Log(levelDetector.ToString());
         if (levelID != levelDetector.ToString())
         {
-            // Removed because it was causing issues with pooling
-            //this.gameObject.SetActive(false);
             this.gameObject.name = "INACTIVE PORTAL";
             active = false;
         }

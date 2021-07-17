@@ -15,7 +15,7 @@ public class GreaterKey3 : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            GameObject.Find("Player").GetComponent<PlayerDataHolder>().ThirdGreaterKey = true;
+            GameObject.Find("Player").GetComponent<PlayerDataHolder>().hasThirdGreaterKey = true;
             greaterKeyUI.SetActive(true);
             Destroy(gameObject);
 

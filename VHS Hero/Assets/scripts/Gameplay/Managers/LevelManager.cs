@@ -3,82 +3,76 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Lean.Pool;
 
+
+//TODO: Split into 2 scripts one for level manager and one for the time manager.
+
 public class LevelManager : MonoBehaviour
 {
-    public GameObject[] levels;
-    private int currentLevel = 1;
+
+    public GameObject[] levels; // Stores all levels in array as prefabs
+
+    private int currentLevel = 1; // Stores index of current level
+
     public int CurrentLevel { get => currentLevel; } // used to inactivate portals in past / future levels.
-    private float pullbackTimer;
 
-    private GameObject lastLevel;
+    private float pullbackTimer; // Timer used to check when we need to pull the player back
 
-    public GameObject keyUI;
+    private GameObject lastLevel; //  Stores reference to last level so it can be destroyed when creating new levels
 
-    private bool pullbacked;
+    public GameObject keyUI; // Stores reference to key symbol in the UI for adjustments during time travel
 
+    private bool pullbacked; // Used to check if we should listen to pullbackTimer
+
+
+    // Used to store if buttons or keys have been picked up at any temporal position.
     public List<string> keysPicked = new List<string>();
 
     public List<string> buttonsActivated = new List<string>();
 
     private int lastLevelIndex;
 
-    private float timeCooldown;
-
-    public TextMeshProUGUI travelStatusText;
-
-    public GameObject flicker;
-
-    public GameObject transHolder;
+    private float timeCooldown; // Time travel cooldown timer
 
     private float nextLevelCooldown; // Fixes issues with timing
 
-    public Slider slider;
 
-    private Vector3 playerStartPos;
-
+    // Post processing volumes
     public GameObject Past;
 
     public GameObject Present;
 
     public GameObject Future;
 
-    private Vector3 lastDoorPos;
+    private Vector3 lastDoorPos; // Stores position of last door used when reseting player 
 
-    public TextMeshProUGUI hintText;
+    public TextMeshProUGUI hintText; // hint text used when the time travel hint is displayed
 
+    // Stores current temporal position
     public enum TemporalPosition { Past, Present, Future };
 
     public TemporalPosition currentTemporalPosition = TemporalPosition.Present;
 
-    public string hint;
 
-    public GameObject leftIndicator;
+    // Managers
+    public sfxManager SFXManager; // Used to play sound effects
 
-    public GameObject rightIndicator;
+    public MusicManager musicManager; // Used to play music when changing scenes
 
-    public bool portalIndicatorEnabled;
+    public GameObject player; // Stores refernce for player used when resetting player's position
 
-    public bool usingPortalIndicator;
+    private float pullbackTimeG; // Dark magic
 
-    public sfxManager SFXManager;
-
-    public MusicManager musicManager;
-
-    public GameObject player;
-
-    private float pullbackTimeG;
+    public HintsReference hint; // Reference to hint settings
 
 
     private void Start()
     {
         lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
         currentLevel++;
-        playerStartPos = player.transform.position;
 
         GameObject.Find("RestartTip").GetComponent<Fade>().FadeIn();
 
@@ -131,7 +125,7 @@ public class LevelManager : MonoBehaviour
         lastLevel = Instantiate(levels[currentLevel - 1], new Vector3(0, 0, 0), Quaternion.identity);
 
 
-        player.transform.position = lastDoorPos;
+        player.transform.position = lastDoorPos; // Reset player position to last door
            
 
         // Reset saved parameters
@@ -145,18 +139,19 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-
+        // Update timers
         timeCooldown -= Time.deltaTime;
         pullbackTimer -= Time.deltaTime;
         nextLevelCooldown -= Time.deltaTime;
 
-        ShowPortalPositionIndicator();
-
+            
+        // Check if we need to pull the player back to their current ref frame.
         if (pullbackTimer < 0 && pullbacked == true)
         {
             Pullback();
         }
 
+        // Post processing fade back effect
         if (pullbackTimer > 0)
         {
             Present.GetComponent<Volume>().weight += (Time.deltaTime / pullbackTimeG);
@@ -173,35 +168,11 @@ public class LevelManager : MonoBehaviour
         pullbacked = false;
         SFXManager.F_pullback();
 
+        StartCoroutine(FadeOutOfCurrentLevel());
+
         InPresent();
 
         TimelineMovementEvent();
-    }
-
-    private void ShowPortalPositionIndicator()
-    {
-        if (currentTemporalPosition == TemporalPosition.Present)
-        {
-            if (portalIndicatorEnabled == true && usingPortalIndicator == true)
-            {
-                Vector3 diff = player.transform.position - GameObject.FindGameObjectWithTag("portal").transform.position;
-                if (diff.x > 0)
-                {
-                    leftIndicator.GetComponent<Image>().enabled = true;
-                    rightIndicator.GetComponent<Image>().enabled = false;
-                }
-                else
-                {
-                    leftIndicator.GetComponent<Image>().enabled = false;
-                    rightIndicator.GetComponent<Image>().enabled = true;
-                }
-            }
-        } else
-        {
-            leftIndicator.GetComponent<Image>().enabled = false;
-            rightIndicator.GetComponent<Image>().enabled = false;
-        }
-
     }
 
     public void NextLevel()
@@ -224,11 +195,18 @@ public class LevelManager : MonoBehaviour
                     Destroy(hint);
                 }
 
-                lastDoorPos = player.transform.position;
-                StartCoroutine(FadeOutOfCurrentLevel());
+                lastDoorPos = player.transform.position; // Used when player restarts level
+
+                StartCoroutine(FadeOutOfCurrentLevel()); // Play transition effect
+
                 SFXManager.F_timeTravel(); // Play time travel sound effect
+
+                // Load new level
                 LeanPool.Despawn(lastLevel);
                 lastLevel = LeanPool.Spawn(levels[currentLevel], new Vector3(0, 0, 0), Quaternion.identity);
+
+
+                // Play tips if they are applicable.
                 if (currentLevel == 3)
                 {
                     GameObject.Find("BackwardsTip").GetComponent<Fade>().FadeIn();
@@ -250,10 +228,11 @@ public class LevelManager : MonoBehaviour
 
     private void TimeTravel()
     {
+        // Plays time travel hint
         if (PlayerPrefs.GetInt("TimeTravelHint") != 0)
         {
             PlayerPrefs.SetInt("TimeTravelHint", 0);
-            StartCoroutine(Type(hintText, hint, 0.03F));
+            StartCoroutine(Type(hintText, hint.hints["TimeTravelHint"], 0.03F));
         }
     }
 
@@ -277,24 +256,6 @@ public class LevelManager : MonoBehaviour
         float duration = 0.65F; // duration of transition
         float targetValueCA = 1; // Target for transition (FADE IN)
         float targetValueBlur = 0.8F; // Target for transition (FADE IN)
-        //if (IntToBool(PlayerPrefs.GetInt("DisableFlashing")) == false)
-        //{
-        //    flicker.SetActive(true);
-        //    yield return new WaitForSeconds(0.09F);
-        //    flicker.SetActive(false);
-        //    yield return new WaitForSeconds(0.04F);
-        //    flicker.SetActive(true);
-        //    yield return new WaitForSeconds(0.02F);
-        //    flicker.SetActive(false);
-        //    yield return new WaitForSeconds(0.05F);
-        //    flicker.SetActive(true);
-        //    yield return new WaitForSeconds(0.03F);
-        //    flicker.SetActive(false);
-        //    yield return new WaitForSeconds(0.06F);
-        //    flicker.SetActive(true);
-        //    yield return new WaitForSeconds(0.07F);
-        //    flicker.SetActive(false);
-        //}
 
         float currentTime = 0;
         ClampedFloatParameter currentValCA = new ClampedFloatParameter(0, 0, 1, false);
@@ -381,6 +342,7 @@ public class LevelManager : MonoBehaviour
 
     private void TimelineMovementEvent()
     {
+        // Triggers portal with update on their temporal status
 
         GameObject[] portals = GameObject.FindGameObjectsWithTag("portal");
 
@@ -388,6 +350,8 @@ public class LevelManager : MonoBehaviour
         {
             portal.GetComponent<Portal>().TimelineMovementEvent();
         }
+
+        // Updates keys positions and existence
 
         for (int i = 0; i < keysPicked.Count; i++)
         {
@@ -401,6 +365,8 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        // Updates buttons positions and existence
+
         for (int i = 0; i < buttonsActivated.Count; i++)
         {
             GameObject ba = GameObject.Find(buttonsActivated[i]);
@@ -409,6 +375,8 @@ public class LevelManager : MonoBehaviour
                 ba.GetComponent<cup>().F_on();
             }
         }
+
+        // Dark magic (I forgot what this does and it is very complicated)
 
         GameObject[] keys = GameObject.FindGameObjectsWithTag("key");
 

@@ -47,7 +47,7 @@ public class ClimbCheck : MonoBehaviour
 
         if (climb.ReadValue<float>() == 1)
         {
-            if (this.gameObject.GetComponentInParent<PlayerDataHolder>().ClimbWall == true && this.gameObject.GetComponentInParent<PlayerMovement>().Grounded == false)
+            if (this.gameObject.GetComponentInParent<PlayerDataHolder>().hasClimb == true && this.gameObject.GetComponentInParent<PlayerMovement>().Grounded == false)
             {
                 if (collision.gameObject.tag == "Ground")
                 {

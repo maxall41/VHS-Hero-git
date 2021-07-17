@@ -16,7 +16,7 @@ public class cup : MonoBehaviour
 
     private void Start()
     {
-        Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().knob;
+        Knob = GameObject.Find("RefHolder").GetComponent<RefHolder>().keyUI;
     }
 
     public void inserted()

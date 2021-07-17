@@ -11,17 +11,17 @@ public class PlayerDataHolder : MonoBehaviour
     private bool secondGreaterKey = false;
     private bool thirdGreaterKey = false;
 
-    //new abilities
+    // New abilities
     private bool doubleJump = false;
     private bool climbWall = false;
     private bool eternity = false; // player will not be automatically pulled back to current level
 
 
-    public bool FirstGreaterKey { get => firstGreaterKey; set => firstGreaterKey = value; }
-    public bool SecondGreaterKey { get => secondGreaterKey; set => secondGreaterKey = value; }
-    public bool ThirdGreaterKey { get => thirdGreaterKey; set => thirdGreaterKey = value; }
-    public bool DoubleJump { get => doubleJump; set => doubleJump = value; }
-    public bool ClimbWall { get => climbWall; set => climbWall = value; }
+    public bool hasFirstGreaterKey { get => firstGreaterKey; set => firstGreaterKey = value; }
+    public bool hasSecondGreaterKey { get => secondGreaterKey; set => secondGreaterKey = value; }
+    public bool hasThirdGreaterKey { get => thirdGreaterKey; set => thirdGreaterKey = value; }
+    public bool hasDoubleJump = false;
+    public bool hasClimb { get => climbWall; set => climbWall = value; }
     
-    public bool Eternity { get => eternity; set => eternity = value; }
+    public bool hasEternity { get => eternity; set => eternity = value; }
 }

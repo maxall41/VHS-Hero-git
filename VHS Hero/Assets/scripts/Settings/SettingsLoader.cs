@@ -7,7 +7,7 @@ public class SettingsLoader : MonoBehaviour
 {
     public string[] exposedVolParameters;
     public AudioMixer[] mixers;
-    // Start is called before the first frame update
+
     void Start()
     {
         for (int i = 0;i < exposedVolParameters.Length;i++)
