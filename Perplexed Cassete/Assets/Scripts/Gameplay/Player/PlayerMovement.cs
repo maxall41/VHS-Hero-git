@@ -1,0 +1,246 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerMovement : MonoBehaviour {
+
+	public float runSpeed = 40f;
+	public float climbSpeed = 20f;
+
+	float horizontalMove = 0f;
+	float verticalMove = 0f;
+
+	public InputAction horizontalMoveInput;
+
+	public InputAction jumpInput;
+
+	public InputAction verticalInput;
+
+
+
+
+	float jumpPressRemember;
+
+	public AudioSource walkSFX;
+
+	public Animator animator;
+
+    private void OnEnable()
+    {
+		horizontalMoveInput.Enable();
+		jumpInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+		horizontalMoveInput.Disable();
+		jumpInput.Disable();
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+		jumpPressRemember -= Time.deltaTime;
+		groundTimer -= Time.deltaTime;
+
+		horizontalMove = horizontalMoveInput.ReadValue<float>() * runSpeed;
+
+		verticalMove = verticalInput.ReadValue<float>() * climbSpeed;
+
+		if (jumpInput.triggered == true)
+        {
+			jumpPressRemember = 0.25F;
+		}
+
+		//if (Input.GetButtonDown("Jump"))
+		//{
+		//	jumpPressRemember = 0.25F;
+		//}
+
+	}
+
+	private float m_JumpForce = 650f;                          // Amount of force added when the player jumps.
+	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
+	[SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
+	[SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
+	[SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
+	[SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
+
+	const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
+	private bool m_Grounded;            // Whether or not the player is grounded.
+	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
+	private Rigidbody2D m_Rigidbody2D;
+	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+	private Vector3 velocity = Vector3.zero;
+	private bool climbing = false; //Whether the player is climbing on the wall.
+	public bool Climbing { get => climbing; set => climbing = value; }
+    public int DoubleJumpCount { get => doubleJumpCount; set => doubleJumpCount = value; }
+    public bool Grounded { get => m_Grounded; set => m_Grounded = value; }
+
+    private float groundTimer;
+	private int doubleJumpCount = 0;
+
+    
+
+    private void Awake()
+	{
+		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+	}
+
+
+	private void FixedUpdate()
+	{
+		Grounded = false;
+
+
+        // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+            {
+                Grounded = true;
+                groundTimer = 0.25F;
+                DoubleJumpCount = 0;
+            }
+        }
+
+
+        if (Climbing == true)
+        {
+			Climb(verticalMove * Time.fixedDeltaTime);
+        }
+        else
+        {
+			Move(horizontalMove * Time.fixedDeltaTime);
+		}
+		
+	}
+
+
+	public void Move(float move)
+	{
+
+		
+		//only control the player if grounded or airControl is turned on
+		if (Grounded || m_AirControl)
+		{
+			if (move > 0.3 || move < -0.3)
+            {
+				animator.SetBool("walk", true);
+			} else
+            {
+				animator.SetBool("walk", false);
+			}
+			if (move > 0.3 || move < -0.3 && walkSFX.isPlaying == false && Grounded)
+			{
+				//TODO: Fix walking sound
+				//walkSFX.volume = Random.Range(0.8F, 1);
+				//walkSFX.pitch = Random.Range(0.8F, 1.1F);
+				//walkSFX.Play();
+			}
+
+
+			// Move the character by finding the target velocity
+			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+			// And then smoothing it out and applying it to the character
+			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
+
+
+			// If the input is moving the player right and the player is facing left...
+			if (move > 0 && !m_FacingRight)
+			{
+				// ... flip the player.
+				Flip();
+			}
+			// Otherwise if the input is moving the player left and the player is facing right...
+			else if (move < 0 && m_FacingRight)
+			{
+				// ... flip the player.
+				Flip();
+			}
+		} else
+        {
+			animator.SetBool("walk", false);
+		}
+
+
+		// If the player should jump...
+		if (jumpPressRemember > 0) 
+		{
+			if (groundTimer > 0)
+			{
+
+				GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_jump(); // Play jump sound effect
+																					// Add a vertical force to the player.
+				Grounded = false;
+				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+				groundTimer = 0;
+				jumpPressRemember = 0;
+			}
+
+			//double jump
+			else if ((DoubleJumpCount < 1) && this.gameObject.GetComponent<PlayerDataHolder>().hasDoubleJump ){
+
+				GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_jump(); // Play jump sound effect
+																					// Add a vertical force to the player.
+				Grounded = false;
+				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+				groundTimer = 0;
+				jumpPressRemember = 0;
+				DoubleJumpCount++;
+			}
+			
+			
+		}
+	}
+
+
+	private void Flip()
+	{
+		// Switch the way the player is labelled as facing.
+		m_FacingRight = !m_FacingRight;
+
+		// Multiply the player's x local scale by -1.
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+	}
+
+    private void OnDrawGizmos()
+    {
+		Gizmos.DrawWireSphere(m_GroundCheck.transform.position, k_GroundedRadius);
+    }
+
+    public void Climb(float climb)
+    {
+		if (Climbing==true)
+        {
+			// Move the character by finding the target velocity
+			Vector3 targetVelocity = new Vector2(0, climb * 10f);
+			// And then smoothing it out and applying it to the character
+			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
+		}
+
+		if (jumpPressRemember > 0) {
+
+
+			GameObject.Find("SFX Manager").GetComponent<sfxManager>().F_jump();
+			Grounded = false;
+			if (m_FacingRight) { 
+			m_Rigidbody2D.AddForce(new Vector2(-2.5f* m_JumpForce, m_JumpForce));
+			}
+            else{
+				m_Rigidbody2D.AddForce(new Vector2(2.5f* m_JumpForce, m_JumpForce));
+			}
+			groundTimer = 0;
+			jumpPressRemember = 0;
+
+
+		}
+	}
+
+	
+
+}
