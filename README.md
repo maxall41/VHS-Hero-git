@@ -1,1 +1,2 @@
-VHS Hero git
+# Perplexed Cassette
+A game about exploring a vast wasteland
